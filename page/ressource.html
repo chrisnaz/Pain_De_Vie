@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="./../style/nav.css">
+
+    <link rel="icon" href="">
+    <title>Première visite | Eglise Pain de Vie</title>
+    <style>
+        .main {
+            padding: 16vh 6% 0 6%
+        }
+
+        .top {
+            margin-top: 3%;
+        }
+
+        h1 {
+            color: #E8917B;
+            font-style: italic;
+        }
+
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            padding-top: 56.25%; /* 16:9 aspect ratio (height / width) */
+        }
+
+            /* Style the iframe to cover the container */
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            /*width: 50%;
+            height: 50%;*/
+        }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+        <template>
+            <div>
+                <div class="navBar">
+                    <header :class="{ 'scrolled-nav': scrolledNav }">
+                    <nav>
+                        <div class="branding">
+                            <v-btn color="transparent" text router-link class="logo" :to="{ name: 'home' }">
+                                <img src="../assets/logoepinaynoir.png" alt="">
+                            </v-btn>
+                            <i class="fa fa-square-o fa-stack-2x"></i>
+                        </div>
+                        <ul v-show="!mobile" class="navigation" v-for="(item, index) in items" :key="index">
+                            <li class="link" @click="goToAnotherPage(item.btn)">{{ item.title }}</li>
+                        </ul>
+                        
+                        <div class="icon" v-show="mobile">
+                            <v-app-bar-nav-icon color="#E8917B" @click="drawer = true" ></v-app-bar-nav-icon>
+                        </div>
+                        <v-navigation-drawer
+                            v-model="drawer"
+                            absolute
+                            temporary
+                            height="330"
+                            style="top: 100%;"
+                        >
+                            <v-list
+                                nav
+                                dense
+                            >
+                                <v-list-item-group
+                                >
+                                <v-list-item v-for="(item, index) in items" :key="index">
+                                    <v-list-item-title class="link" @click="goToAnotherPage(item.btn)">{{ item.title }}</v-list-item-title>
+                                </v-list-item>
+                
+                                </v-list-item-group>
+                            </v-list>
+                        </v-navigation-drawer>
+                    </nav>
+                    </header>
+                </div>
+
+                <div class="main">
+                    <h1 style="color: #E8917B;font-style: italic;">Bible Project</h1>
+                    <v-responsive aspect-ratio="16/9" style="margin-top: 2%;">
+                        <div class="video-container">
+                            <iframe
+                                :src="youtubeSrc"
+                            ></iframe>
+                        </div>      
+                    </v-responsive>
+                    </div>
+                </v-app>
+
+              <div>
+                <v-card>
+                  <div
+                    v-bind="localAttrs"
+                    :padless="padless"
+                    style="margin-top: 2%;"
+                  >
+                    <v-card
+                      flat
+                      tile
+                      width="100%"
+                      class="footer"
+                      style="background-color: #EDEDED;text-align: center;"
+                    >
+                      <v-card-text>
+                        <v-btn
+                          v-for="icon in icons"
+                          :key="icon"
+                          class="mx-4"
+                          icon
+                        >
+                          <v-icon color="#E8917B" size="37px">
+                            {{ icon }}
+                          </v-icon>
+                        </v-btn>
+                      </v-card-text>
+              
+                      <v-divider style="color: #E8917B;"></v-divider>
+              
+                      <v-card-text style="color:#E8917B; font-size: 17px;">
+                        &copy;{{ new Date().getFullYear() }} — <strong>Pain de Vie</strong>
+                      </v-card-text>
+                    </v-card>
+                  </div>
+                </v-card>
+              </div>
+            </div>            
+        </template>
+        
+    </div>
+    <!-- built files will be auto injected -->
+  </body>
+
+  <!--================ script ===================-->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+  <script src="https://www.w3schools.com/lib/w3data.js"></script>
+
+  <script type="text/javascript">
+    w3IncludeHTML();
+</script>
+
+  <script>
+    new Vue({
+        el: "#app",
+        vuetify: new Vuetify(),
+        data: () => ({
+            scrolledNav : null,
+            mobile : false,
+            mobileNav : null,
+            windowWidth : null,
+            drawer: false,
+            tab: null,
+            items: [
+                { title : 'Home', btn : '/' },
+                { title : 'Première visite', btn : '/visite' },
+                { title : 'Communauté', btn : '/communaute' },
+                { title : 'Activités', btn : '/activity' },
+                { title : 'Ressources', btn : '/Ressources' },
+                { title : 'Contact', btn : '/contact' },
+                { title : 'Nous soutenir', btn : '/nous-soutenir' }
+            ],
+
+
+            reverse: false,
+            icons: [
+                'mdi-email',
+                'mdi-youtube',
+                'mdi-instagram',
+            ],
+            padless: false,
+        }),
+
+        computed: {
+            localAttrs () {
+                const attrs = {}
+
+                if (this.variant === 'default') {
+                attrs.absolute = false
+                attrs.fixed = false
+                } else {
+                attrs[this.variant] = true
+                }
+                return attrs
+            },
+            youtubeSrc() {
+                return "https://www.youtube.com/embed/dSujxs4kdn8"
+            }
+        },
+
+        created() {
+            window.addEventListener("resize", this.checkScreen)
+            this.checkScreen()
+        },
+
+        mounted() {
+            window.addEventListener("scroll", this.updateScroll)
+        },
+
+        methods : {
+            
+            toggleMobileNav() {
+                this.mobileNav = !this.mobileNav
+            },
+
+            updateScroll() {
+                const scrollPosition = window.scrollY
+                if (scrollPosition > 50) {
+                    this.scrolledNav = true
+                    return
+                }
+                this.scrolledNav = false
+            },
+
+            checkScreen() {
+                this.windowWidth = window.innerWidth
+                if (this.windowWidth <= 1257) {
+                    this.mobile = true
+                    return
+                }
+                this.mobile = false
+                this.mobileNav = false
+                return
+            },
+
+            goToAnotherPage(param) {
+                this.$router.push(param)
+            },
+        }
+    })
+  </script>
+</html>

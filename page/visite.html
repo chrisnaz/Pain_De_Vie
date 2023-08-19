@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="./../style/nav.css">
+
+    <link rel="icon" href="">
+    <title>Première visite | Eglise Pain de Vie</title>
+    <style>
+      .main {
+        padding: 16vh 6% 0 6%
+      }
+
+      .top {
+        margin-top: 3%;
+      }
+
+      h1 {
+        color: #E8917B;
+        font-style: italic;
+      }
+      .about-text, ul, p {
+        text-align: justify;
+        line-height: 33px;
+        font-size: 20px;
+      }
+      .about-text ul {
+        margin-left: 4%;
+      }
+      .imageCenter {
+        display: block;
+        justify-content: center;
+      }
+
+      .pastor {
+        display: inline-block;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+        <template>
+            <div>
+              <div class="navBar">
+                <header :class="{ 'scrolled-nav': scrolledNav }">
+                  <nav>
+                    <div class="branding">
+                        <v-btn color="transparent" text router-link class="logo" :to="{ name: 'home' }">
+                            <img src="../assets/logoepinaynoir.png" alt="">
+                        </v-btn>
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                    </div>
+                    <ul v-show="!mobile" class="navigation" v-for="(item, index) in items" :key="index">
+                        <li class="link" @click="goToAnotherPage(item.btn)">{{ item.title }}</li>
+                    </ul>
+                      
+                    <div class="icon" v-show="mobile">
+                        <v-app-bar-nav-icon color="#E8917B" @click="drawer = true" ></v-app-bar-nav-icon>
+                    </div>
+                    <v-navigation-drawer
+                      v-model="drawer"
+                      absolute
+                      temporary
+                      height="330"
+                      style="top: 100%;"
+                      >
+                      <v-list
+                        nav
+                        dense
+                      >
+                        <v-list-item-group
+                        >
+                        <v-list-item v-for="(item, index) in items" :key="index">
+                            <v-list-item-title class="link" @click="goToAnotherPage(item.btn)">{{ item.title }}</v-list-item-title>
+                        </v-list-item>
+        
+                        </v-list-item-group>
+                      </v-list>
+                    </v-navigation-drawer>
+                  </nav>
+                </header>
+              </div>
+
+              <div class="main">
+                <div>
+                  <v-row>
+                    <v-col>
+                      <h1>Qui sommes-nous ?</h1>
+                    </v-col>
+                  </v-row>
+                  <v-row class="about-text">
+                    <v-col>
+                      <p>Nous sommes une assemblée des chrétiens , partageant la même foi en Jésus-Christ</p>
+                      <p>En tant que protestants, évangéliques, et baptistes, nous plongeons nos racines dans les 5 affirmations de la Réforme :</p>
+                      <ul>
+                        <li>Soli Deo Gloria : seul Dieu mérite notre reconnaissance absolue. Dieu est le seul qu’il faut adorer et prier.</li>
+                        <li>Sola Gratia : seule la grâce fait vivre. Le salut n’est pas le résultat de nos efforts ou de nos mérites mais s’obtient par la grâce seule.</li>
+                        <li>Solus Christus : seul le Christ nous conduit à Dieu. Jésus-Christ est le seul médiateur entre Dieu et nous.</li>
+                        <li>Sola Fide : seule la foi sauve. Le salut n’est pas donné par les sacrements ou la religion mais par la foi seule.</li>
+                        <li>Sola Scriptura : seules les Écritures font autorité pour la foi. La Bible est l’autorité suprême en matière de doctrine. Les 4 autres Solas découlent de celui-ci</li>
+                      </ul>
+                      <p>Au niveau national, nous faisons partie de la FEEBF (Fédération des Eglises Evangéliques Baptiste de France), du CNEF (Conseil National des Evangéliques de France) et de la FPF (Fédération Protestante de France).</p>
+                    </v-col>
+                  </v-row>
+                </div>
+
+                <div class="top">
+                  <v-row style="justify-content: center;">
+                    <v-col cols="7" md="3"
+                      v-for="(card, i) in cards"
+                      :key="i"
+                    >
+                      <v-img class="imageCenter"
+                        :src="getImageUrl(card.link)"
+                      >
+                      </v-img>
+                    </v-col>
+                  </v-row>
+                </div>
+
+                <div class="top">
+                  <v-row>
+                    <v-col>
+                      <h1>Nos croyances</h1>
+                    </v-col>
+                  </v-row>
+                  <v-row class="about-text ">
+                    <v-col cols="12" md="6">
+                      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum voluptates molestiae facere accusamus, illo quibusdam ducimus quidem laborum vitae? Impedit autem excepturi possimus, qui vitae, velit deserunt maiores quaerat quasi aliquam modi asperiores obcaecati quibusdam deleniti repellendus. Quia beatae necessitatibus aut cupiditate assumenda maxime quos dolorum quam provident exercitationem, maiores veniam asperiores iure ipsa sed consectetur distinctio officiis esse ut illum iusto! Amet accusamus adipisci accusantium ullam tenetur consectetur sed, repellendus neque, cumque, cum facilis labore id beatae perspiciatis tempore minus. Distinctio eaque quisquam minima ullam hic tempora, in recusandae voluptate officiis quam esse ducimus, maxime enim explicabo quaerat voluptates.</p>
+                      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum voluptates molestiae facere accusamus, illo quibusdam ducimus quidem laborum vitae? Impedit autem excepturi possimus, qui vitae, velit deserunt maiores quaerat quasi aliquam modi asperiores obcaecati quibusdam deleniti repellendus. Quia beatae necessitatibus aut cupiditate assumenda maxime quos dolorum quam provident exercitationem, maiores veniam asperiores iure ipsa sed consectetur distinctio officiis esse ut illum iusto! Amet accusamus adipisci accusantium ullam tenetur consectetur sed, repellendus neque, cumque, cum facilis labore id beatae perspiciatis tempore minus. Distinctio eaque quisquam minima ullam hic tempora, in recusandae voluptate officiis quam esse ducimus, maxime enim explicabo quaerat voluptates.</p>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum voluptates molestiae facere accusamus, illo quibusdam ducimus quidem laborum vitae? Impedit autem excepturi possimus, qui vitae, velit deserunt maiores quaerat quasi aliquam modi asperiores obcaecati quibusdam deleniti repellendus. Quia beatae necessitatibus aut cupiditate assumenda maxime quos dolorum quam provident exercitationem, maiores veniam asperiores iure ipsa sed consectetur distinctio officiis esse ut illum iusto! Amet accusamus adipisci accusantium ullam tenetur consectetur sed, repellendus neque, cumque, cum facilis labore id beatae perspiciatis tempore minus. Distinctio eaque quisquam minima ullam hic tempora, in recusandae voluptate officiis quam esse ducimus, maxime enim explicabo quaerat voluptates.</p>
+                      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum voluptates molestiae facere accusamus, illo quibusdam ducimus quidem laborum vitae? Impedit autem excepturi possimus, qui vitae, velit deserunt maiores quaerat quasi aliquam modi asperiores obcaecati quibusdam deleniti repellendus. Quia beatae necessitatibus aut cupiditate assumenda maxime quos dolorum quam provident exercitationem, maiores veniam asperiores iure ipsa sed consectetur distinctio officiis esse ut illum iusto! Amet accusamus adipisci accusantium ullam tenetur consectetur sed, repellendus neque, cumque, cum facilis labore id beatae perspiciatis tempore minus. Distinctio eaque quisquam minima ullam hic tempora, in recusandae voluptate officiis quam esse ducimus, maxime enim explicabo quaerat voluptates.</p>
+                    </v-col>
+                  </v-row>
+                </div>
+
+                <div class="top">
+                  <v-row>
+                    <v-col>
+                      <h1>Notre histoire</h1>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col>
+
+                    </v-col>
+                  </v-row>
+                </div>
+
+                <div class="top">
+                  <v-row>
+                    <v-col>
+                      <h1>Organisation</h1>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col>
+                      <ul>
+                        <li>L'équipe pastorale</li>
+                        <p>L'équipe pastorale est composée du pasteur et des anciens : </p>
+                      </ul>
+                    </v-col>
+                  </v-row>
+                  <v-row style="text-align: center;">
+                    <v-col>
+                        <v-list-item class="pastor"
+                          v-for="item in pastor"
+                          :key="item.title"
+                        >
+                        <v-list-item-content>
+                          <v-avatar
+                            :size="300"
+                          >
+                            <img :src="item.avatar">
+                          </v-avatar>            
+                          <v-list-item-subtitle>
+                            <p style="text-align: center;" v-text="item.name"></p>
+                          </v-list-item-subtitle>
+                          <v-list-item-subtitle>
+                            <p style="text-align: center;" v-text="item.title"></p>
+                          </v-list-item-subtitle>
+                        </v-list-item-content>
+                      </v-list>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col>
+                      <ul>
+                        <li>Conseil d'église</li>
+                      </ul>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col>
+                      <ul>
+                        <li>Organisation</li>
+                      </ul>
+                    </v-col>
+                  </v-row>
+                </div>
+              </div>
+
+              <div>
+                <v-card>
+                  <div
+                    v-bind="localAttrs"
+                    :padless="padless"
+                    style="margin-top: 2%;"
+                  >
+                    <v-card
+                      flat
+                      tile
+                      width="100%"
+                      class="footer"
+                      style="background-color: #EDEDED;text-align: center;"
+                    >
+                      <v-card-text>
+                        <v-btn
+                          v-for="icon in icons"
+                          :key="icon"
+                          class="mx-4"
+                          icon
+                        >
+                          <v-icon color="#E8917B" size="37px">
+                            {{ icon }}
+                          </v-icon>
+                        </v-btn>
+                      </v-card-text>
+              
+                      <v-divider style="color: #E8917B;"></v-divider>
+              
+                      <v-card-text style="color:#E8917B; font-size: 17px;">
+                        &copy;{{ new Date().getFullYear() }} — <strong>Pain de Vie</strong>
+                      </v-card-text>
+                    </v-card>
+                  </div>
+                </v-card>
+              </div>
+            </div>            
+        </template>
+        
+    </div>
+    <!-- built files will be auto injected -->
+  </body>
+
+  <!--================ script ===================-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+  <script src="https://www.w3schools.com/lib/w3data.js"></script>
+
+  <script type="text/javascript">
+    w3IncludeHTML();
+</script>
+
+  <script>
+    new Vue({
+        el: "#app",
+        vuetify: new Vuetify(),
+        data: () => ({
+            scrolledNav : null,
+            mobile : false,
+            mobileNav : null,
+            windowWidth : null,
+            drawer: false,
+            tab: null,
+            items: [
+                { title : 'Home', btn : '/' },
+                { title : 'Première visite', btn : '/visite' },
+                { title : 'Communauté', btn : '/communaute' },
+                { title : 'Activités', btn : '/activity' },
+                { title : 'Ressources', btn : '/Ressources' },
+                { title : 'Contact', btn : '/contact' },
+                { title : 'Nous soutenir', btn : '/nous-soutenir' }
+            ],
+
+            cards : [
+              { title : 'FEEBF', link : 'Logo-FEEBF.png' },
+              { title : 'CNEF', link : 'CNEF.png' },
+              { title : 'FPF', link : 'FPF.png' }
+            ],
+
+            icons: [
+                'mdi-email',
+                'mdi-youtube',
+                'mdi-instagram',
+            ],
+
+            pastor: [
+              { title: 'Pasteure', name: 'Dorcas Moury', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
+              { title: 'Anciens', name:'Félix et Jacquiline Gélican', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
+              /*{ title: 'Conseil d\'église', name:'', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
+              { title: 'Organisation', name:'', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },*/
+            ],
+            padless: false,
+            variant: 'default',
+        }),
+
+        computed: {
+            localAttrs () {
+                const attrs = {}
+
+                if (this.variant === 'default') {
+                attrs.absolute = false
+                attrs.fixed = false
+                } else {
+                attrs[this.variant] = true
+                }
+                return attrs
+            },
+        },
+
+        created() {
+        window.addEventListener("resize", this.checkScreen)
+        this.checkScreen()
+        },
+
+        mounted() {
+            window.addEventListener("scroll", this.updateScroll)
+        },
+
+        methods : {
+          toggleMobileNav() {
+              this.mobileNav = !this.mobileNav
+          },
+
+          updateScroll() {
+              const scrollPosition = window.scrollY
+              if (scrollPosition > 50) {
+                  this.scrolledNav = true
+                  return
+              }
+              this.scrolledNav = false
+          },
+
+          checkScreen() {
+              this.windowWidth = window.innerWidth
+              if (this.windowWidth <= 1257) {
+                  this.mobile = true
+                  return
+              }
+              this.mobile = false
+              this.mobileNav = false
+              return
+          },
+
+          goToAnotherPage(param) {
+              this.$router.push(param)
+          },
+
+          getImageUrl(imageId) {
+            return `../assets/${imageId}`
+          }
+        }
+    })
+  </script>
+</html>

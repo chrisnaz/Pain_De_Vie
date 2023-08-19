@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="./../style/nav.css">
+
+    <link rel="icon" href="">
+    <title>Première visite | Eglise Pain de Vie</title>
+    <style>
+        .main {
+            padding: 16vh 6% 0 6%
+        }
+
+        .top {
+            margin-top: 3%;
+        }
+
+        h1 {
+            color: #E8917B;
+            font-style: italic;
+        }
+
+        .community {
+            white-space: pre-line;
+            margin: 16vh 6% 0 6%;
+        }
+        .community h1 {
+            color: #E8917B;
+            font-style: italic;
+        }
+        .basil {
+            background-color: #FFFBE6 !important;
+        }
+        .basil--text {
+            color: #356859 !important;
+        }
+        .card-community--respon {
+            display: none;
+        }
+
+        .responsive--card--text {
+            text-align: justify;
+            white-space: pre-line;
+            margin-top: 2%;
+            line-height: 33px;
+            font-size: 20px;
+        }
+        @media screen and (max-width: 1336px) {
+            .card-community {
+                display: none;
+            }
+            .card-community--respon {
+                display: block;
+            }
+        }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+        <template>
+            <div>
+              <div class="navBar">
+                <header :class="{ 'scrolled-nav': scrolledNav }">
+                  <nav>
+                    <div class="branding">
+                        <v-btn color="transparent" text router-link class="logo" :to="{ name: 'home' }">
+                            <img src="../assets/logoepinaynoir.png" alt="">
+                        </v-btn>
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                    </div>
+                    <ul v-show="!mobile" class="navigation" v-for="(item, index) in items" :key="index">
+                        <li class="link" @click="goToAnotherPage(item.btn)">{{ item.title }}</li>
+                    </ul>
+                      
+                    <div class="icon" v-show="mobile">
+                        <v-app-bar-nav-icon color="#E8917B" @click="drawer = true" ></v-app-bar-nav-icon>
+                    </div>
+                    <v-navigation-drawer
+                      v-model="drawer"
+                      absolute
+                      temporary
+                      height="330"
+                      style="top: 100%;"
+                      >
+                      <v-list
+                        nav
+                        dense
+                      >
+                        <v-list-item-group
+                        >
+                        <v-list-item v-for="(item, index) in items" :key="index">
+                            <v-list-item-title class="link" @click="goToAnotherPage(item.btn)">{{ item.title }}</v-list-item-title>
+                        </v-list-item>
+        
+                        </v-list-item-group>
+                      </v-list>
+                    </v-navigation-drawer>
+                  </nav>
+                </header>
+              </div>
+
+              <v-app class="main">
+                <div>
+                  <v-row>
+                    <v-col>
+                      <h1>Notre communauté</h1>
+                    </v-col>
+                  </v-row>
+                </div>
+
+                <v-app class="card-community" color="basil">
+                    <v-tabs
+                      v-model="tab"
+                      color="FFFBE6"
+                      grow
+                      height="400"
+                      active-class="basil"
+                      hide-slider
+                    >
+                      <v-tab
+                        v-for="(item, index) in community"
+                        :key="index"
+                      >
+                      <v-card
+                          class="mx-auto"         
+                        >
+                          <v-img
+                            class="white--text align-end"
+                            height="200px"
+                            width="300px"
+                            :src="getImageUrl(item.image)"
+                          >
+                          </v-img>
+              
+                          <v-card-text class="text--primary">
+                            <div> {{ item.title }} </div>
+                          </v-card-text>
+              
+                          <v-card-actions>
+                            <v-btn
+                              color="orange"
+                              text
+                            >
+                              Cliquez pour en savoir plus
+                            </v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-tab>
+                      <v-tabs-items v-model="tab"
+                        light
+                        >
+                        <v-tab-item
+                          v-for="(item, index) in community"
+                          :key="index"
+                        >
+                          <v-card
+                            color="basil"
+                            flat
+                          >
+                            <v-card-text>
+                              <div class="responsive--card--text"
+                                style="margin: 2% 2% 2%;"
+                              >
+                               <p style="color:orange;font-size: 30px;"> {{ item.title }} </p>
+                               <p> {{ item.text }} </p>
+                              </div>
+                            </v-card-text>
+                          </v-card>
+                        </v-tab-item>
+                      </v-tabs-items>
+                    </v-tabs>      
+                </v-app>
+              
+                <v-app class="card-community--respon" color="basil">      
+                    <v-row 
+                        align="center"
+                        justify="center" 
+                        >
+                        <v-col v-for="(post, index) in community" :key="index"
+                            cols="10" 
+                            md="4"
+                        >
+                            <v-dialog
+                                width="1000"                                                                                                    
+                            >
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-card
+                                        class="mx-auto"
+                                        max-width="400"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        <v-img
+                                            class="align-end text-white"
+                                            height="200"
+                                            :src="getImageUrl(post.image)"
+                                            cover
+                                        >
+                                            <v-card-title></v-card-title>
+                                        </v-img>
+                        
+                                        <v-card-title>
+                                            {{ post.title }}
+                                        </v-card-title>
+                                        <v-btn
+                                            color="orange"
+                                            text
+                                        >
+                                        Cliquez pour en savoir plus
+                                        </v-btn>
+                                    </v-card>
+                                </template>
+                        
+                                <v-card>
+                                    <v-card-title style="background-color: #E8917B;">
+                                        {{ post.title }}
+                                    </v-card-title>
+                            
+                                    <v-card-text class="responsive--card--text"
+                                        color="basil">
+                                        {{ post.text }}
+                                    </v-card-text>
+                                </v-card>
+                            </v-dialog>                                        
+                        </v-col>
+                    </v-row>
+                </v-app>
+              </div>
+
+              <div>
+                <v-card>
+                  <div
+                    v-bind="localAttrs"
+                    :padless="padless"
+                    style="margin-top: 2%;"
+                  >
+                    <v-card
+                      flat
+                      tile
+                      width="100%"
+                      class="footer"
+                      style="background-color: #EDEDED;text-align: center;"
+                    >
+                      <v-card-text>
+                        <v-btn
+                          v-for="icon in icons"
+                          :key="icon"
+                          class="mx-4"
+                          icon
+                        >
+                          <v-icon color="#E8917B" size="37px">
+                            {{ icon }}
+                          </v-icon>
+                        </v-btn>
+                      </v-card-text>
+              
+                      <v-divider style="color: #E8917B;"></v-divider>
+              
+                      <v-card-text style="color:#E8917B; font-size: 17px;">
+                        &copy;{{ new Date().getFullYear() }} — <strong>Pain de Vie</strong>
+                      </v-card-text>
+                    </v-card>
+                  </div>
+                </v-card>
+              </div>
+            </div>            
+        </template>
+        
+    </div>
+    <!-- built files will be auto injected -->
+  </body>
+
+  <!--================ script ===================-->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+  <script src="https://www.w3schools.com/lib/w3data.js"></script>
+
+  <script type="text/javascript">
+    w3IncludeHTML();
+</script>
+
+  <script>
+    new Vue({
+        el: "#app",
+        vuetify: new Vuetify(),
+        data: () => ({
+            scrolledNav : null,
+            mobile : false,
+            mobileNav : null,
+            windowWidth : null,
+            drawer: false,
+            tab: null,
+            items: [
+                { title : 'Home', btn : '/' },
+                { title : 'Première visite', btn : '/visite' },
+                { title : 'Communauté', btn : '/communaute' },
+                { title : 'Activités', btn : '/activity' },
+                { title : 'Ressources', btn : '/Ressources' },
+                { title : 'Contact', btn : '/contact' },
+                { title : 'Nous soutenir', btn : '/nous-soutenir' }
+            ],
+
+            community: [
+                { 
+                id: 1,
+                title: 'Pdv enfants (3-14 ans)', 
+                text: 'Nous croyons que chaque enfant, quel que soit son âge, a de la valeur aux yeux de Dieu. C\'est pour cela, chaque dimanche, des adultes consacrés prennent'+
+                        ' le temps avec eux afin de poser les fondements de la Parole de Dieu dans leur cœur, et ainsi faire naître en eux la foi et les aider à grandir dans leur relation avec Jésus.'+
+                        ' Mais en le faisant d’une manière attractive et vivante, en utilisant des méthodes adaptées à chaque âge. Nous savons qu’il est important d’inculquer dès le plus jeune âge aux'+
+                        ' futurs adultes de demain des valeurs chrétiennes fondamentales.\nLes différents groupes : \n - Les abeilles (3-6 ans)\n- Les papillons (7-22 ans)\n- Les explorateurs (12-14 ans)',
+                image: 'logo.svg'
+                },
+                { 
+                id: 2,
+                title: 'Pdv jeunes (15-25 ans)', 
+                text: 'Connectés à Dieu et aux autres jeunes\n'+
+                        'Tout au long de l’année, les jeunes se rencontrent le dimanche après le culte ( deux fois par mois) afin de passer un moment convivial autour de la Parole, la prière et apprendre à se connaître.\n'+
+                        'Les jeunes organisent et participent également aux différents événements consacrés à la jeunesse et autour des thématiques qui les concerne.', 
+                image: 'logojeunenoir.png'
+                },
+                { 
+                id:3,
+                title: 'Pdv à la maison', 
+                text: 'Au Psaume 133 au 1er verset de la Bible nous dit :\n'+
+                        '« Oh ! Quel plaisir c’est, pour des frères, et quel bonheur que d’être ensemble ! » (SEM)\n'+
+                        'Le groupe de maison est un lieu convivial, pour des rencontres multigénérationnelles et multiculturelles autour de la parole et la de la prière Ils permettent  d’approfondir la communion fraternelle '+
+                        'en plus du culte, des rencontres à l’église.', 
+                image: 'groupedemaisonnoir.png'
+                },
+                { 
+                id:4,
+                title: 'Epin\'aide', 
+                text: '« Il leur répondit : Que celui qui a deux tuniques partage avec celui qui n’en a point, et que celui qui a de quoi manger agisse de même » Luc 3:11\n'+
+                        'Epin’aide, une association locale d’entraide envers les personnes en difficulté.\n'+
+                        'Elle propose un soutien pratique pour la ville d’Epinay-sur seine : \n'+
+                        '- Aide aux devoirs\n- Écouté et convivialité : repas de Noël pour les personnes isolées ou démunies\n - Aide matérielle : colis alimentaires, braderie\n - Organisation de concerts et manifestations', 
+                image: 'epinaidnoir.png'
+                },
+            ],
+            tab: null,
+            dialog: false,
+            padless: false,
+            variant: 'default',
+
+            icons: [
+                'mdi-email',
+                'mdi-youtube',
+                'mdi-instagram',
+            ],
+        }),
+
+        computed: {
+            localAttrs () {
+                const attrs = {}
+
+                if (this.variant === 'default') {
+                attrs.absolute = false
+                attrs.fixed = false
+                } else {
+                attrs[this.variant] = true
+                }
+                return attrs
+            },
+        },
+
+        created() {
+        window.addEventListener("resize", this.checkScreen)
+        this.checkScreen()
+        },
+
+        mounted() {
+            window.addEventListener("scroll", this.updateScroll)
+        },
+
+        methods : {
+            
+            toggleMobileNav() {
+                this.mobileNav = !this.mobileNav
+            },
+
+            updateScroll() {
+                const scrollPosition = window.scrollY
+                if (scrollPosition > 50) {
+                    this.scrolledNav = true
+                    return
+                }
+                this.scrolledNav = false
+            },
+
+            checkScreen() {
+                this.windowWidth = window.innerWidth
+                if (this.windowWidth <= 1257) {
+                    this.mobile = true
+                    return
+                }
+                this.mobile = false
+                this.mobileNav = false
+                return
+            },
+
+            goToAnotherPage(param) {
+                this.$router.push(param)
+            },
+
+            getImageUrl(imageId) {
+                return `../assets/${imageId}`
+            },
+
+            openDialog() {
+                this.dialogVisible = true;
+            },
+            closeDialog() {
+                this.dialogVisible = false;
+            },
+        }
+    })
+  </script>
+</html>
