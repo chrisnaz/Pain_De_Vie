@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="./../style/nav.css" />
 
     <link rel="icon" href="./../assets/favicon.ico" />
-    <title>Activités | Eglise Pain de Vie</title>
+    <title>Visite | Eglise Pain de Vie</title>
     <style>
       .main {
         padding: 16vh 6% 0 6%;
@@ -39,12 +39,16 @@
         font-style: italic;
       }
 
-      .text {
+      p {
         text-align: justify;
-        white-space: pre-line;
-        margin-top: 2%;
         line-height: 33px;
         font-size: 20px;
+      }
+
+      .text-center {
+        font-size: 55px;
+        text-align: center;
+        line-height: 31px;
       }
     </style>
   </head>
@@ -107,36 +111,112 @@
             </header>
           </div>
 
-          <v-app class="main">
-            <v-timeline
-              align-top
-              :dense="$vuetify.breakpoint.smAndDown"
-              :reverse="!reverse"
+          <div>
+            <v-img
+              class="imageCenter"
+              src="./../assets/donation.png"
+              height="60vh"
             >
-              <v-timeline-item
-                v-for="(item, i) in Items"
-                :key="i"
-                :color="item.color"
-                fill-dot
-              >
-                <v-card :color="item.color" dark>
-                  <v-card-title class="text-h6">
-                    {{ item.title }}
-                  </v-card-title>
-                  <v-card-text class="white text--primary">
-                    <p class="text">{{ item.text }}</p>
-                    <!--v-btn
-                                    :color="item.color"
-                                    class="mx-0"
-                                    outlined
-                                    >
-                                    Button
-                                    </!--v-btn-->
-                  </v-card-text>
-                </v-card>
-              </v-timeline-item>
-            </v-timeline>
-          </v-app>
+              <div class="text-overlay"></div>
+            </v-img>
+          </div>
+          <div class="main">
+            <div class="tab">
+              <p>
+                «Que chacun donne comme il l’a décidé dans son cœur, sans regret
+                ni contrainte, car Dieu aime celui qui donne avec joie.» 2
+                Corinthiens 9:7
+              </p>
+              <p>
+                Chaque don est utile, il permet de subvenir aux besoins de
+                l’église, soutenir des associations pour l’avancement du royaume
+                de Dieu. <br />Sentez-vous libre de contribuer à cette belle
+                œuvre!
+              </p>
+              <p>
+                Pour soutenir l’église et apporter vos dîmes et offrandes, vous
+                pouvez faire des virements sur le compte de l’église en
+                utilisant ce RIB :
+              </p>
+
+              <v-simple-table style="margin-top: 3%;">
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th style="font-size: 25px;" class="text-center">Titulaire du Compte</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-size: 15px;" class="text-center">
+                        EGLISE PROTESTANTE BAPTISTE DU P<br />
+                        ASS CULT.EGL EVANG.PAIN DE VIE<br />
+                        134 AVENUE DE LA REPUBLIQUE 93800 EPINAY SUR SEINE
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+              <v-simple-table>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th style="font-size: 25px;" class="text-center">Domiciliation</th>
+                      <th style="font-size: 25px;" class="text-center">Code BIC</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="text-center">
+                      <td style="font-size: 15px;">CREDIT COOPERATIF</td>
+                      <td style="font-size: 15px;">CCOPFRPPXXX</td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+              <v-simple-table>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th style="font-size: 25px;" class="text-center">RIB</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p style="text-align: center;">
+                          42556 | 10000 | 08002646308 | 62<br />
+                          Code banque | Code Guichet | Numéro de Compte | Clé
+                          RIB
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+              <v-simple-table>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th style="font-size: 25px;" class="text-center">
+                        IBAN - Numéro de compte bancaire international
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="text-center">
+                      <td style="font-size: 20px;">FR76 | 4255 | 9100 | 0008 | 0026 | 4630 | 862</td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+            </div>
+            <div>
+              <p>
+                Vous pouvez également faire un don en utilisant le formulaire
+                ci-dessous :
+              </p>
+            </div>
+          </div>
 
           <div>
             <v-card>
@@ -175,6 +255,7 @@
   </body>
 
   <!--================ script ===================-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 
@@ -205,35 +286,30 @@
           { title: "Nous soutenir", btn: "sustain" },
         ],
 
-        Items: [
-          {
-            color: "red lighten-2",
-            title: "Culte",
-            text:
-              "Nous vous accueillons chaque dimanche à 10h, pour un moment de culte centré sur la Bible car nous croyons que c’est elle qui nous façonne et nous guide." +
-              " Nous exprimons notre amour et notre reconnaissance à Dieu par des chants. La mort et la résurrection sont le fondement de notre foi c’est pourquoi nous " +
-              "partageons le pain et le vin pour nous rappeler du corps brisé et du sang versé à la croix.",
-          },
-          {
-            color: "purple darken-1",
-            title: "Réunion de prière",
-            text:
-              "« Ne vous inquiétez de rien ; mais en toute chose faites connaître vos besoins à Dieu par des prières et des supplications, avec actions de grâces » Philippiens 4:6\n" +
-              "Un vendredi sur deux, nos portes sont ouvertes à partir de 20h pour un temps de prière pour nous soutenir mutuellement et exposer les besoins de notre église et de notre ville à Dieu.",
-          },
-          {
-            color: "green lighten-1",
-            title: "Pdv formation",
-            text:
-              "Veux-tu découvrir la foi chrétienne ?\n" +
-              "Veux-tu en savoir davantage sur Dieu ?\n" +
-              "Veux-tu t’engager avec Dieu ?\n" +
-              "Rejoins nous un dimanche après-midi sur deux pour découvrir les fondements de la foi chrétienne.",
-          },
+        cards: [
+          { title: "FEEBF", link: "Logo-FEEBF.png" },
+          { title: "CNEF", link: "CNEF.png" },
+          { title: "FPF", link: "FPF.png" },
         ],
-        reverse: false,
+
         icons: ["mdi-email", "mdi-youtube", "mdi-instagram"],
+
+        pastor: [
+          {
+            title: "Pasteure",
+            name: "Dorcas Moury",
+            avatar: "https://cdn.vuetifyjs.com/images/lists/4.jpg",
+          },
+          {
+            title: "Anciens",
+            name: "Félix et Jacquiline Gélican",
+            avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
+          },
+          /*{ title: 'Conseil d\'église', name:'', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
+              { title: 'Organisation', name:'', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },*/
+        ],
         padless: false,
+        variant: "default",
       }),
 
       computed: {
@@ -286,6 +362,10 @@
 
         goToAnotherPage(param) {
           return `${param}`;
+        },
+
+        getImageUrl(imageId) {
+          return `../assets/${imageId}`;
         },
       },
     });

@@ -11,8 +11,8 @@
 
     <link rel="stylesheet" href="./../style/nav.css">
 
-    <link rel="icon" href="">
-    <title>Première visite | Eglise Pain de Vie</title>
+    <link rel="icon" href="./../assets/favicon.ico">
+    <title>Communautés | Eglise Pain de Vie</title>
     <style>
         .main {
             padding: 16vh 6% 0 6%
@@ -49,7 +49,7 @@
             text-align: justify;
             white-space: pre-line;
             margin-top: 2%;
-            line-height: 33px;
+            line-height: 30px;
             font-size: 20px;
         }
         @media screen and (max-width: 1336px) {
@@ -70,13 +70,22 @@
                 <header :class="{ 'scrolled-nav': scrolledNav }">
                   <nav>
                     <div class="branding">
-                        <v-btn color="transparent" text router-link class="logo" :to="{ name: 'home' }">
-                            <img src="../assets/logoepinaynoir.png" alt="">
-                        </v-btn>
+                        <a href="./../">
+                            <v-btn color="transparent" text class="logo">
+                                <img src="../assets/logoepinaynoir.png" alt="">
+                            </v-btn>
+                        </a>
                         <i class="fa fa-square-o fa-stack-2x"></i>
                     </div>
-                    <ul v-show="!mobile" class="navigation" v-for="(item, index) in items" :key="index">
-                        <li class="link" @click="goToAnotherPage(item.btn)">{{ item.title }}</li>
+                    <ul
+                        v-show="!mobile"
+                        class="navigation"
+                        v-for="(item, index) in items"
+                        :key="index"
+                    >                    
+                        <a class="link" id="nav-link" :href="goToAnotherPage(item.btn)"
+                            >{{ item.title }}</a
+                        >
                     </ul>
                       
                     <div class="icon" v-show="mobile">
@@ -96,7 +105,12 @@
                         <v-list-item-group
                         >
                         <v-list-item v-for="(item, index) in items" :key="index">
-                            <v-list-item-title class="link" @click="goToAnotherPage(item.btn)">{{ item.title }}</v-list-item-title>
+                            <a
+                                class="link"
+                                id="nav-link"
+                                :href="goToAnotherPage(item.btn)"
+                                >{{ item.title }}</a
+                            >
                         </v-list-item>
         
                         </v-list-item-group>
@@ -299,13 +313,13 @@
             drawer: false,
             tab: null,
             items: [
-                { title : 'Home', btn : '/' },
-                { title : 'Première visite', btn : '/visite' },
-                { title : 'Communauté', btn : '/communaute' },
-                { title : 'Activités', btn : '/activity' },
-                { title : 'Ressources', btn : '/Ressources' },
-                { title : 'Contact', btn : '/contact' },
-                { title : 'Nous soutenir', btn : '/nous-soutenir' }
+                { title: "Home", btn: "./../" },
+                { title: "Première visite", btn: "visite" },
+                { title: "Communauté", btn: "community" },
+                { title: "Activités", btn: "activity" },
+                { title: "Ressources", btn: "ressource" },
+                { title: "Contact", btn: "contact" },
+                { title: "Nous soutenir", btn: "sustain" },
             ],
 
             community: [
@@ -407,7 +421,7 @@
             },
 
             goToAnotherPage(param) {
-                this.$router.push(param)
+                return `${param}`;
             },
 
             getImageUrl(imageId) {

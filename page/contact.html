@@ -7,6 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
 
     <link
       href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
@@ -24,27 +25,55 @@
     <link rel="stylesheet" href="./../style/nav.css" />
 
     <link rel="icon" href="./../assets/favicon.ico" />
-    <title>Activités | Eglise Pain de Vie</title>
+    <title>Contact | Eglise Pain de Vie</title>
     <style>
-      .main {
-        padding: 16vh 6% 0 6%;
-      }
-
       .top {
-        margin-top: 3%;
+        /*margin: 16vh 6% 0 12%;*/
+        margin-top: 12%;
+        text-align: left;
       }
-
-      h1 {
+      .top h1 {
         color: #e8917b;
         font-style: italic;
+        font-size: 45px;
       }
-
+      .main2 {
+        margin: 7vh 6% 0 6%;
+      }
       .text {
         text-align: justify;
         white-space: pre-line;
         margin-top: 2%;
         line-height: 33px;
         font-size: 20px;
+        text-align: center;
+      }
+
+      .imageCenter {
+        margin: 0;
+        min-height: 30vh;
+        height: 30vh !important;
+        background-size: cover;
+      }
+
+      .map .map-container {
+        position: relative;
+        overflow: hidden;
+        padding-top: 56.25%; /* 16:9 aspect ratio */
+        margin-bottom: 16px;
+      }
+
+      .map .map-iframe {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      @media screen and (max-width: 959px) {
+        .map-iframe {
+          width: 100vw;
+        }
       }
     </style>
   </head>
@@ -107,36 +136,128 @@
             </header>
           </div>
 
-          <v-app class="main">
-            <v-timeline
-              align-top
-              :dense="$vuetify.breakpoint.smAndDown"
-              :reverse="!reverse"
+          <div class="backgroupd">
+            <v-img
+              class="imageCenter"
+              src="./../assets/contact.jpg"
+              width="100%"
             >
-              <v-timeline-item
-                v-for="(item, i) in Items"
-                :key="i"
-                :color="item.color"
-                fill-dot
+              <div class="top">
+                <!--h1>Contact</h1-->
+              </div>
+            </v-img>
+          </div>
+
+          <div class="main2">
+            <v-row align="center">
+              <v-col cols="12" md="6">
+                <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+                  <v-text-field
+                    v-model="name"
+                    :rules="nameRules"
+                    label="Nom*"
+                    required
+                    outlined
+                    rows="1"
+                    row-height="15"
+                  ></v-text-field>
+
+                  <v-text-field
+                    v-model="firstname"
+                    :rules="nameRules"
+                    label="Prénom*"
+                    required
+                    outlined
+                    rows="1"
+                    row-height="15"
+                  ></v-text-field>
+
+                  <v-text-field
+                    v-model="email"
+                    :rules="emailRules"
+                    label="E-mail*"
+                    required
+                    outlined
+                    rows="1"
+                    row-height="15"
+                  ></v-text-field>
+
+                  <v-textarea
+                    v-model="firstname"
+                    :rules="nameRules"
+                    label="Sujet*"
+                    required
+                    outlined
+                    rows="15"
+                    row-height="15"
+                  ></v-textarea>
+
+                  <!--v-textarea
+                            v-model="num"
+                            :rules="[v => !!v || 'Numéro est obligatoire',]"
+                            label="Numéro"
+                            required
+                          ></!--v-textarea-->
+
+                  <v-btn
+                    :disabled="!valid"
+                    class="mr-4"
+                    @click="validate"
+                    style="background-color: #2fa743; color: white"
+                  >
+                    Envoyer
+                  </v-btn>
+
+                  <!--v-btn
+                            color="error"
+                            class="mr-4"
+                            @click="reset"
+                          >
+                            Reset Form
+                          </!--v-btn>
+                    
+                          <v-btn--
+                            color="warning"
+                            @click="resetValidation"
+                          >
+                            Reset Validation
+                          </v-btn-->
+                </v-form>
+              </v-col>
+              <v-col
+                cols="12"
+                md="6"
+                style="text-align: center; margin-top: 3%"
               >
-                <v-card :color="item.color" dark>
-                  <v-card-title class="text-h6">
-                    {{ item.title }}
-                  </v-card-title>
-                  <v-card-text class="white text--primary">
-                    <p class="text">{{ item.text }}</p>
-                    <!--v-btn
-                                    :color="item.color"
-                                    class="mx-0"
-                                    outlined
-                                    >
-                                    Button
-                                    </!--v-btn-->
-                  </v-card-text>
-                </v-card>
-              </v-timeline-item>
-            </v-timeline>
-          </v-app>
+                <h1 style="color: #e8917b; font-style: italic">
+                  Culte du dimanche
+                </h1>
+                <div class="text">
+                  <p>
+                    134 Av. de la République<br />93800 Epinay-sur Seine<br />France
+                  </p>
+                  <p>Tous les dimanches à 10h</p>
+                </div>
+                <div class="map-container" style="margin-top: 5%">
+                  <a
+                    href="https://www.google.com/maps/dir//134+Av.+de+la+R%C3%A9publique+93800+%C3%89pinay-sur-Seine+France/@48.9492973,2.3310887,16z/data=!4m6!4m5!1m0!1m2!1m1!1s0x47e66927a26fa15d:0x3b512112797d6205!3e0"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <iframe
+                      class="map-iframe"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2620.219967106232!2d2.3285137771184368!3d48.9492972713447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66927a26fa15d%3A0x3b512112797d6205!2s134%20Av.%20de%20la%20R%C3%A9publique%2C%2093800%20%C3%89pinay-sur-Seine%2C%20France!5e0!3m2!1sfr!2sbe!4v1682965962174!5m2!1sfr!2sbe"
+                      style="border: 0; width: 100%; height: 345px"
+                      allowfullscreen=""
+                      loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade"
+                    >
+                    </iframe>
+                  </a>
+                </div>
+              </v-col>
+            </v-row>
+          </div>
 
           <div>
             <v-card>
@@ -177,6 +298,7 @@
   <!--================ script ===================-->
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://unpkg.com/vee-validate@2.0.0-rc.18/dist/vee-validate.js"></script>
 
   <script src="https://www.w3schools.com/lib/w3data.js"></script>
 
@@ -185,6 +307,12 @@
   </script>
 
   <script>
+    Vue.use(VeeValidate);
+
+    VeeValidate.Validator.extend("polite", {
+      getMessage: (field) => `You need to be polite in the ${field} field`,
+      validate: (value) => value.toLowerCase().indexOf("please") !== -1,
+    });
     new Vue({
       el: "#app",
       vuetify: new Vuetify(),
@@ -205,35 +333,20 @@
           { title: "Nous soutenir", btn: "sustain" },
         ],
 
-        Items: [
-          {
-            color: "red lighten-2",
-            title: "Culte",
-            text:
-              "Nous vous accueillons chaque dimanche à 10h, pour un moment de culte centré sur la Bible car nous croyons que c’est elle qui nous façonne et nous guide." +
-              " Nous exprimons notre amour et notre reconnaissance à Dieu par des chants. La mort et la résurrection sont le fondement de notre foi c’est pourquoi nous " +
-              "partageons le pain et le vin pour nous rappeler du corps brisé et du sang versé à la croix.",
-          },
-          {
-            color: "purple darken-1",
-            title: "Réunion de prière",
-            text:
-              "« Ne vous inquiétez de rien ; mais en toute chose faites connaître vos besoins à Dieu par des prières et des supplications, avec actions de grâces » Philippiens 4:6\n" +
-              "Un vendredi sur deux, nos portes sont ouvertes à partir de 20h pour un temps de prière pour nous soutenir mutuellement et exposer les besoins de notre église et de notre ville à Dieu.",
-          },
-          {
-            color: "green lighten-1",
-            title: "Pdv formation",
-            text:
-              "Veux-tu découvrir la foi chrétienne ?\n" +
-              "Veux-tu en savoir davantage sur Dieu ?\n" +
-              "Veux-tu t’engager avec Dieu ?\n" +
-              "Rejoins nous un dimanche après-midi sur deux pour découvrir les fondements de la foi chrétienne.",
-          },
-        ],
         reverse: false,
         icons: ["mdi-email", "mdi-youtube", "mdi-instagram"],
         padless: false,
+        valid: true,
+        name: "",
+        nameRules: [
+          (v) => !!v || "Name is required",
+          //v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+        ],
+        email: "",
+        emailRules: [
+          (v) => !!v || "E-mail is required",
+          (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+        ],
       }),
 
       computed: {
@@ -247,6 +360,9 @@
             attrs[this.variant] = true;
           }
           return attrs;
+        },
+        youtubeSrc() {
+          return "https://www.youtube.com/embed/dSujxs4kdn8";
         },
       },
 
@@ -285,7 +401,9 @@
         },
 
         goToAnotherPage(param) {
+          //this.$router.push(param);
           return `${param}`;
+          //return `../assets/${imageId}`
         },
       },
     });

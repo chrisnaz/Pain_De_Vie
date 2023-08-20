@@ -12,8 +12,8 @@
 
     <link rel="stylesheet" href="./../style/nav.css">
 
-    <link rel="icon" href="">
-    <title>Première visite | Eglise Pain de Vie</title>
+    <link rel="icon" href="./../assets/favicon.ico">
+    <title>Ressources | Eglise Pain de Vie</title>
     <style>
         .main {
             padding: 16vh 6% 0 6%
@@ -32,6 +32,7 @@
             position: relative;
             overflow: hidden;
             padding-top: 56.25%; /* 16:9 aspect ratio (height / width) */
+            width: 50%;
         }
 
             /* Style the iframe to cover the container */
@@ -39,8 +40,22 @@
             position: absolute;
             top: 0;
             left: 0;
-            /*width: 50%;
-            height: 50%;*/
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-responsive {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+        }
+
+        .video-responsive iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
     </style>
   </head>
@@ -52,13 +67,22 @@
                     <header :class="{ 'scrolled-nav': scrolledNav }">
                     <nav>
                         <div class="branding">
-                            <v-btn color="transparent" text router-link class="logo" :to="{ name: 'home' }">
-                                <img src="../assets/logoepinaynoir.png" alt="">
-                            </v-btn>
+                            <a href="./../">
+                                <v-btn color="transparent" text class="logo">
+                                    <img src="../assets/logoepinaynoir.png" alt="">
+                                </v-btn>
+                            </a>
                             <i class="fa fa-square-o fa-stack-2x"></i>
                         </div>
-                        <ul v-show="!mobile" class="navigation" v-for="(item, index) in items" :key="index">
-                            <li class="link" @click="goToAnotherPage(item.btn)">{{ item.title }}</li>
+                        <ul
+                            v-show="!mobile"
+                            class="navigation"
+                            v-for="(item, index) in items"
+                            :key="index"
+                        >                    
+                            <a class="link" id="nav-link" :href="goToAnotherPage(item.btn)"
+                                >{{ item.title }}</a
+                            >
                         </ul>
                         
                         <div class="icon" v-show="mobile">
@@ -78,7 +102,12 @@
                                 <v-list-item-group
                                 >
                                 <v-list-item v-for="(item, index) in items" :key="index">
-                                    <v-list-item-title class="link" @click="goToAnotherPage(item.btn)">{{ item.title }}</v-list-item-title>
+                                    <a
+                                        class="link"
+                                        id="nav-link"
+                                        :href="goToAnotherPage(item.btn)"
+                                        >{{ item.title }}</a
+                                    >
                                 </v-list-item>
                 
                                 </v-list-item-group>
@@ -89,13 +118,23 @@
                 </div>
 
                 <div class="main">
-                    <h1 style="color: #E8917B;font-style: italic;">Bible Project</h1>
-                    <v-responsive aspect-ratio="16/9" style="margin-top: 2%;">
+                    <h1>Bible Project</h1>
+                    <!--v-responsive aspect-ratio="16/9" style="margin-top: 2%;">
                         <div class="video-container">
                             <iframe
                                 :src="youtubeSrc"
+                                width="560" height="349"
                             ></iframe>
                         </div>      
+                    </v-responsive-->
+                    <v-responsive class="video-responsive">
+                        <iframe
+                          width="560"
+                          height="315"
+                          :src="youtubeSrc"
+                          frameborder="0"
+                          allowfullscreen
+                        ></iframe>
                     </v-responsive>
                     </div>
                 </v-app>
@@ -165,13 +204,13 @@
             drawer: false,
             tab: null,
             items: [
-                { title : 'Home', btn : '/' },
-                { title : 'Première visite', btn : '/visite' },
-                { title : 'Communauté', btn : '/communaute' },
-                { title : 'Activités', btn : '/activity' },
-                { title : 'Ressources', btn : '/Ressources' },
-                { title : 'Contact', btn : '/contact' },
-                { title : 'Nous soutenir', btn : '/nous-soutenir' }
+                { title: "Home", btn: "./../" },
+                { title: "Première visite", btn: "visite" },
+                { title: "Communauté", btn: "community" },
+                { title: "Activités", btn: "activity" },
+                { title: "Ressources", btn: "ressource" },
+                { title: "Contact", btn: "contact" },
+                { title: "Nous soutenir", btn: "sustain" },
             ],
 
 
@@ -237,7 +276,7 @@
             },
 
             goToAnotherPage(param) {
-                this.$router.push(param)
+                return `${param}`;
             },
         }
     })
