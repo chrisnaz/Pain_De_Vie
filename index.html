@@ -193,13 +193,18 @@
                     width="350px"
                   >
                     <div class="text-overlay">
-                      <v-btn
-                        class="btn"
-                        plain
-                        @click="goToAnotherPage(card.btn)"
-                      >
-                        {{ card.title }}
-                      </v-btn>
+                      <a
+                        class="link"
+                        id="nav-link"
+                        :href="goToAnotherPage(card.btn)"
+                        >
+                        <v-btn
+                          class="btn"
+                          plain
+                        >
+                          {{ card.title }}
+                        </v-btn>
+                    </a>
                     </div>
                   </v-img>
                 </v-col>
@@ -278,10 +283,10 @@
         colors: ["#C5CAE9", "#E53935", "#5E35B1", "#80D8FF", "#388E3C"],
         slides: ["First", "Second", "Third", "Fourth", "Fifth"],
         cards: [
-          { title: "Contact", link: "contact.jpg", btn: "/contact" },
-          { title: "Ressource", link: "ressource.jpg", btn: "/Ressources" },
-          { title: "Communaute", link: "communaute.png", btn: "/communaute" },
-          { title: "Donate", link: "donation.png", btn: "/nous-soutenir" },
+          { title: "Contact", link: "contact.jpg", btn: "./page/contact" },
+          { title: "Ressource", link: "ressource.jpg", btn: "./page/ressource" },
+          { title: "Communaute", link: "communaute.png", btn: "./page/community" },
+          { title: "Donate", link: "donation.png", btn: "./page/sustain" },
         ],
 
         icons: ["mdi-email", "mdi-youtube", "mdi-instagram"],
