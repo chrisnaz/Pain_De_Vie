@@ -52,6 +52,10 @@
             line-height: 30px;
             font-size: 18px;
         }
+
+        .img {
+          margin: 5%;
+        }
         @media screen and (max-width: 1336px) {
             .card-community {
                 display: none;
@@ -78,14 +82,24 @@
                         <i class="fa fa-square-o fa-stack-2x"></i>
                     </div>
                     <ul
-                        v-show="!mobile"
-                        class="navigation"
-                        v-for="(item, index) in items"
+                      v-show="!mobile"
+                      class="navigation"
+                      style="justify-content: space-evenly;"
+                    >
+                      <a v-for="(item, index) in items"
                         :key="index"
-                    >                    
-                        <a class="link" id="nav-link" :href="goToAnotherPage(item.btn)"
-                            >{{ item.title }}</a
-                        >
+                        class="link"
+                        id="nav-link"
+                        :href="goToAnotherPage(item.btn)"
+                        style="color: #E8917B"
+                        >{{ item.title }}</a
+                      >
+                      <a class="link"
+                        id="nav-link" 
+                        href="sustain"
+                        style="color: #C51162;"
+                      >
+                        Nous soutenir</a>
                     </ul>
                       
                     <div class="icon" v-show="mobile">
@@ -105,12 +119,18 @@
                         <v-list-item-group
                         >
                         <v-list-item v-for="(item, index) in items" :key="index">
-                            <a
-                                class="link"
-                                id="nav-link"
-                                :href="goToAnotherPage(item.btn)"
-                                >{{ item.title }}</a
-                            >
+                          <a
+                            class="link"
+                            id="nav-link"
+                            :href="goToAnotherPage(item.btn)"
+                            style="color: #E8917B"
+                            >{{ item.title }}</a
+                          >
+                        </v-list-item>
+                        <v-list-item>
+                          <a class="link" style="color: #C51162;"
+                            href="sustain">Nous soutenir
+                          </a>
                         </v-list-item>
         
                         </v-list-item-group>
@@ -143,15 +163,15 @@
                         :key="index"
                       >
                       <v-card
-                          class="mx-auto"         
+                          class="mx-auto"   
                         >
-                          <v-img
-                            class="white--text align-end"
-                            height="200px"
-                            width="300px"
-                            :src="getImageUrl(item.image)"
-                          >
-                          </v-img>
+                          <div class="img">
+                            <v-img
+                              class="white--text align-end"
+                              :src="getImageUrl(item.image)"
+                            >
+                            </v-img>
+                          </div>
               
                           <v-card-text class="text--primary">
                             <div> {{ item.title }} </div>
@@ -211,11 +231,10 @@
                                         v-bind="attrs"
                                         v-on="on"
                                     >
+                                      <div class="img">
                                         <v-img
                                             class="align-end text-white"
-                                            height="200"
                                             :src="getImageUrl(post.image)"
-                                            cover
                                         >
                                             <v-card-title></v-card-title>
                                         </v-img>
@@ -229,6 +248,7 @@
                                         >
                                         Cliquez pour en savoir plus
                                         </v-btn>
+                                      </div>
                                     </v-card>
                                 </template>
                         
@@ -263,15 +283,10 @@
                       style="background-color: #EDEDED;text-align: center;"
                     >
                       <v-card-text>
-                        <v-btn
-                          v-for="icon in icons"
-                          :key="icon"
-                          class="mx-4"
-                          icon
-                        >
-                          <v-icon color="#E8917B" size="37px">
-                            {{ icon }}
-                          </v-icon>
+                        <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon>
+                          <a :href="goToAnotherPage(icon.link)">
+                            <v-icon color="#E8917B" size="37px"> {{ icon.icon }}</v-icon>
+                          </a>
                         </v-btn>
                       </v-card-text>
               
@@ -313,13 +328,13 @@
             drawer: false,
             tab: null,
             items: [
-                { title: "Home", btn: "./../" },
-                { title: "Première visite", btn: "visite" },
-                { title: "Communauté", btn: "community" },
-                { title: "Activités", btn: "activity" },
-                { title: "Ressources", btn: "ressource" },
-                { title: "Contact", btn: "contact" },
-                { title: "Nous soutenir", btn: "sustain" },
+              { title: "Home", btn: "./../" },
+              { title: "Première visite", btn: "visite" },
+              { title: "Communauté", btn: "community" },
+              { title: "Activités", btn: "activity" },
+              { title: "Ressources", btn: "ressource" },
+              { title: "Contact", btn: "contact" },
+              /*{ title: "Nous soutenir", btn: "sustain" },*/
             ],
 
             community: [
@@ -365,9 +380,9 @@
             variant: 'default',
 
             icons: [
-                'mdi-email',
-                'mdi-youtube',
-                'mdi-instagram',
+              {icon: "mdi-email", link: "contact"},
+              {icon: "mdi-youtube", link: "https://www.youtube.com/@eglisepaindevie3673/featured" },
+              {icon: "mdi-instagram", link: "ok"}
             ],
         }),
 

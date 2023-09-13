@@ -95,15 +95,22 @@
                 <ul
                   v-show="!mobile"
                   class="navigation"
-                  v-for="(item, index) in items"
-                  :key="index"
+                  style="justify-content: space-evenly;"
                 >
-                  <a
+                  <a v-for="(item, index) in items"
+                    :key="index"
                     class="link"
                     id="nav-link"
                     :href="goToAnotherPage(item.btn)"
+                    style="color: #E8917B"
                     >{{ item.title }}</a
                   >
+                  <a class="link"
+                    id="nav-link" 
+                    href="sustain"
+                    style="color: #C51162;"
+                  >
+                    Nous soutenir</a>
                 </ul>
 
                 <div class="icon" v-show="mobile">
@@ -126,8 +133,14 @@
                           class="link"
                           id="nav-link"
                           :href="goToAnotherPage(item.btn)"
+                          style="color: #E8917B"
                           >{{ item.title }}</a
                         >
+                      </v-list-item>
+                      <v-list-item>
+                        <a class="link" style="color: #C51162;"
+                          href="sustain">Nous soutenir
+                        </a>
                       </v-list-item>
                     </v-list-item-group>
                   </v-list>
@@ -273,11 +286,11 @@
                   class="footer"
                   style="background-color: #ededed; text-align: center"
                 >
-                  <v-card-text>
-                    <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon>
-                      <v-icon color="#E8917B" size="37px"> {{ icon }} </v-icon>
-                    </v-btn>
-                  </v-card-text>
+                  <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon>
+                    <a :href="goToAnotherPage(icon.link)">
+                      <v-icon color="#E8917B" size="37px"> {{ icon.icon }}</v-icon>
+                    </a>
+                  </v-btn>
 
                   <v-divider style="color: #e8917b"></v-divider>
 
@@ -330,11 +343,15 @@
           { title: "Activités", btn: "activity" },
           { title: "Ressources", btn: "ressource" },
           { title: "Contact", btn: "contact" },
-          { title: "Nous soutenir", btn: "sustain" },
+          /*{ title: "Nous soutenir", btn: "sustain" },*/
         ],
 
         reverse: false,
-        icons: ["mdi-email", "mdi-youtube", "mdi-instagram"],
+        icons: [
+          {icon: "mdi-email", link: "contact"},
+          {icon: "mdi-youtube", link: "https://www.youtube.com/@eglisepaindevie3673/featured" },
+          {icon: "mdi-instagram", link: "ok"}
+        ],
         padless: false,
         valid: true,
         name: "",

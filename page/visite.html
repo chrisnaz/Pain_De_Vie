@@ -8,6 +8,9 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="./../style/nav.css">
 
@@ -43,6 +46,10 @@
         display: inline-block;
         margin: auto;
       }
+
+      .font {
+        font-family: 'Montserrat';
+      }
     </style>
   </head>
   <body>
@@ -63,12 +70,22 @@
                     <ul
                       v-show="!mobile"
                       class="navigation"
-                      v-for="(item, index) in items"
-                      :key="index"
-                    >                    
-                      <a class="link" id="nav-link" :href="goToAnotherPage(item.btn)"
-                          >{{ item.title }}</a
+                      style="justify-content: space-evenly;"
+                    >
+                      <a v-for="(item, index) in items"
+                        :key="index"
+                        class="link"
+                        id="nav-link"
+                        :href="goToAnotherPage(item.btn)"
+                        style="color: #E8917B"
+                        >{{ item.title }}</a
                       >
+                      <a class="link"
+                        id="nav-link" 
+                        href="sustain"
+                        style="color: #C51162;"
+                      >
+                        Nous soutenir</a>
                     </ul>
                       
                     <div class="icon" v-show="mobile">
@@ -92,8 +109,14 @@
                             class="link"
                             id="nav-link"
                             :href="goToAnotherPage(item.btn)"
+                            style="color: #E8917B"
                             >{{ item.title }}</a
                           >
+                        </v-list-item>
+                        <v-list-item>
+                          <a class="link" style="color: #C51162;"
+                            href="sustain">Nous soutenir
+                          </a>
                         </v-list-item>
         
                         </v-list-item-group>
@@ -111,7 +134,7 @@
                     </v-col>
                   </v-row>
                   <v-row class="about-text">
-                    <v-col>
+                    <v-col class="font">
                       <p>Nous sommes une assemblée des chrétiens , partageant la même foi en Jésus-Christ</p>
                       <p>En tant que protestants, évangéliques, et baptistes, nous plongeons nos racines dans les 5 affirmations de la Réforme :</p>
                       <ul>
@@ -146,7 +169,7 @@
                       <h1>Nos croyances</h1>
                     </v-col>
                   </v-row>
-                  <v-row class="about-text ">
+                  <v-row class="about-text font">
                     <v-col cols="12" md="6">
                       <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum voluptates molestiae facere accusamus, illo quibusdam ducimus quidem laborum vitae? Impedit autem excepturi possimus, qui vitae, velit deserunt maiores quaerat quasi aliquam modi asperiores obcaecati quibusdam deleniti repellendus. Quia beatae necessitatibus aut cupiditate assumenda maxime quos dolorum quam provident exercitationem, maiores veniam asperiores iure ipsa sed consectetur distinctio officiis esse ut illum iusto! Amet accusamus adipisci accusantium ullam tenetur consectetur sed, repellendus neque, cumque, cum facilis labore id beatae perspiciatis tempore minus. Distinctio eaque quisquam minima ullam hic tempora, in recusandae voluptate officiis quam esse ducimus, maxime enim explicabo quaerat voluptates.</p>
                       <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum voluptates molestiae facere accusamus, illo quibusdam ducimus quidem laborum vitae? Impedit autem excepturi possimus, qui vitae, velit deserunt maiores quaerat quasi aliquam modi asperiores obcaecati quibusdam deleniti repellendus. Quia beatae necessitatibus aut cupiditate assumenda maxime quos dolorum quam provident exercitationem, maiores veniam asperiores iure ipsa sed consectetur distinctio officiis esse ut illum iusto! Amet accusamus adipisci accusantium ullam tenetur consectetur sed, repellendus neque, cumque, cum facilis labore id beatae perspiciatis tempore minus. Distinctio eaque quisquam minima ullam hic tempora, in recusandae voluptate officiis quam esse ducimus, maxime enim explicabo quaerat voluptates.</p>
@@ -178,7 +201,7 @@
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-col>
+                    <v-col class="font">
                       <ul>
                         <li>L'équipe pastorale</li>
                         <p>L'équipe pastorale est composée du pasteur et des anciens : </p>
@@ -191,7 +214,7 @@
                           v-for="item in pastor"
                           :key="item.title"
                         >
-                        <v-list-item-content>
+                        <v-list-item-content class="font">
                           <v-avatar
                             :size="300"
                           >
@@ -207,14 +230,14 @@
                       </v-list>
                     </v-col>
                   </v-row>
-                  <v-row>
+                  <v-row class="font">
                     <v-col>
                       <ul>
                         <li>Conseil d'église</li>
                       </ul>
                     </v-col>
                   </v-row>
-                  <v-row>
+                  <v-row class="font">
                     <v-col>
                       <ul>
                         <li>Organisation</li>
@@ -239,15 +262,10 @@
                       style="background-color: #EDEDED;text-align: center;"
                     >
                       <v-card-text>
-                        <v-btn
-                          v-for="icon in icons"
-                          :key="icon"
-                          class="mx-4"
-                          icon
-                        >
-                          <v-icon color="#E8917B" size="37px">
-                            {{ icon }}
-                          </v-icon>
+                        <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon>
+                          <a :href="goToAnotherPage(icon.link)">
+                            <v-icon color="#E8917B" size="37px"> {{ icon.icon }}</v-icon>
+                          </a>
                         </v-btn>
                       </v-card-text>
               
@@ -296,7 +314,7 @@
               { title: "Activités", btn: "activity" },
               { title: "Ressources", btn: "ressource" },
               { title: "Contact", btn: "contact" },
-              { title: "Nous soutenir", btn: "sustain" },
+              /*{ title: "Nous soutenir", btn: "sustain" },*/
             ],
 
             cards : [
@@ -306,9 +324,9 @@
             ],
 
             icons: [
-                'mdi-email',
-                'mdi-youtube',
-                'mdi-instagram',
+              { icon: "mdi-email", link: "contact" },
+              { icon: "mdi-youtube", link: "https://www.youtube.com/@eglisepaindevie3673/featured" },
+              { icon: "mdi-instagram", link: "ok" }
             ],
 
             pastor: [
