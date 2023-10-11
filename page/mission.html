@@ -21,10 +21,14 @@
       rel="stylesheet"
     />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@3.3.20/dist/vuetify.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@3.3.20/dist/vuetify.min.js"></script>
+
     <link rel="stylesheet" href="./../style/nav.css" />
 
     <link rel="icon" href="./../assets/favicon.ico" />
-    <title>Activités | Eglise Pain de Vie</title>
+    <title>Visite | Eglise Pain de Vie</title>
     <style>
       .main {
         padding: 16vh 6% 0 6%;
@@ -39,10 +43,8 @@
         font-style: italic;
       }
 
-      .text {
+      p {
         text-align: justify;
-        white-space: pre-line;
-        margin-top: 2%;
         line-height: 33px;
         font-size: 18px;
       }
@@ -73,7 +75,7 @@
                     class="link"
                     id="nav-link"
                     :href="goToAnotherPage(item.btn)"
-                    style="color: #E8917B;"
+                    style="color: #E8917B"
                     >{{ item.title }}</a
                   >
                   <a class="link"
@@ -120,38 +122,82 @@
             </header>
           </div>
 
-          <v-app class="main">
-            <v-timeline
-              align-top
-              :dense="$vuetify.breakpoint.smAndDown"
-              :reverse="!reverse"
-            >
-              <v-timeline-item
-                v-for="(item, i) in Items"
-                :key="i"
-                :color="item.color"
-                fill-dot
-              >
-                <v-card :color="item.color" dark>
-                  <v-card-title class="text-h6">
-                    {{ item.title }}
-                  </v-card-title>
-                  <v-card-text class="white text--primary">
-                    <p class="text">{{ item.text }}</p>
-                    <!--v-btn
-                                    :color="item.color"
-                                    class="mx-0"
-                                    outlined
-                                    >
-                                    Button
-                                    </!--v-btn-->
-                  </v-card-text>
-                </v-card>
-              </v-timeline-item>
-            </v-timeline>
-          </v-app>
-
           <div>
+            <!-- <v-img
+              class="imageCenter"
+              src="./../assets/donation.png"
+              height="60vh"
+            >
+              <div class="text-overlay"></div>
+            </v-img> -->
+          </div>
+          <div class="main">
+            <h1 style="text-align: center;" >Notre mission</h1>
+
+            <v-row align="center" justify="space-around" style="margin-top: 2rem;">
+                <v-col v-for="(mission, i) in missions"
+                    :key="i"
+                    cols="auto">
+                    <v-card
+                        class="mx-auto"
+                        max-width="344"
+                    >
+                        <v-img
+                            src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                            height="200px"
+                            class="white--text align-center text-center"
+                        >
+                            <v-card-title class="d-flex justify-center" style="color: white;">{{ mission.title }}</v-card-title>
+                        </v-img>
+
+                        <!-- <v-card-title>
+                            Top western road trips
+                        </v-card-title> -->
+
+                        <v-card-subtitle>
+                            1,000 miles of wonder
+                        </v-card-subtitle>
+
+                        <v-card-actions>
+                        <v-btn
+                            color="orange lighten-2"
+                            text
+                        >
+                            En savoir plus
+                        </v-btn>
+
+                        <v-spacer></v-spacer>
+
+                        <v-btn
+                            icon
+                            @click="mission.show = !mission.show"
+                        >
+                            <v-icon>{{ mission.show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                        </v-btn>
+                        </v-card-actions>
+
+                        <v-expand-transition>
+                        <div v-show="mission.show">
+                            <v-divider></v-divider>
+
+                            <v-card-text>
+                                {{ mission.text }}
+                            </v-card-text>
+                        </div>
+                        </v-expand-transition>
+                    </v-card>
+                </v-col>
+            </v-row>
+            <v-row style="margin-top: 3rem;">
+                <v-col>
+                    <p style="text-align: center;">
+                        Mettre le texte voulu en dessous
+                    </p>
+                </v-col>
+            </v-row>
+          </div>
+
+          <div style="margin-top: 4rem;">
             <v-card>
               <div
                 v-bind="localAttrs"
@@ -190,6 +236,7 @@
   </body>
 
   <!--================ script ===================-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 
@@ -209,7 +256,6 @@
         mobileNav: null,
         windowWidth: null,
         drawer: false,
-        tab: null,
         items: [
           { title: "Home", btn: "./../" },
           { title: "Première visite", btn: "visite" },
@@ -221,39 +267,20 @@
           /*{ title: "Nous soutenir", btn: "sustain" },*/
         ],
 
-        Items: [
-          {
-            color: "red lighten-2",
-            title: "Culte",
-            text:
-              "Nous vous accueillons chaque dimanche à 10h, pour un moment de culte centré sur la Bible car nous croyons que c’est elle qui nous façonne et nous guide." +
-              " Nous exprimons notre amour et notre reconnaissance à Dieu par des chants. La mort et la résurrection sont le fondement de notre foi c’est pourquoi nous " +
-              "partageons le pain et le vin pour nous rappeler du corps brisé et du sang versé à la croix.",
-          },
-          {
-            color: "purple darken-1",
-            title: "Réunion de prière",
-            text:
-              "« Ne vous inquiétez de rien ; mais en toute chose faites connaître vos besoins à Dieu par des prières et des supplications, avec actions de grâces » Philippiens 4:6\n" +
-              "Un vendredi sur deux, nos portes sont ouvertes à partir de 20h pour un temps de prière pour nous soutenir mutuellement et exposer les besoins de notre église et de notre ville à Dieu.",
-          },
-          {
-            color: "green lighten-1",
-            title: "Pdv formation",
-            text:
-              "Veux-tu découvrir la foi chrétienne ?\n" +
-              "Veux-tu en savoir davantage sur Dieu ?\n" +
-              "Veux-tu t’engager avec Dieu ?\n" +
-              "Rejoins nous un dimanche après-midi sur deux pour découvrir les fondements de la foi chrétienne.",
-          },
-        ],
-        reverse: false,
         icons: [
-          {icon: "mdi-email", link: "contact"},
-          {icon: "mdi-youtube", link: "https://www.youtube.com/@eglisepaindevie3673/featured" },
-          {icon: "mdi-instagram", link: "ok"}
+          { icon: "mdi-email", link: "contact" },
+          { icon: "mdi-youtube", link: "https://www.youtube.com/@eglisepaindevie3673/featured" },
+          { icon: "mdi-instagram", link: "ok" }
         ],
+
+        missions: [
+            { title: "titre1", show: false, text: "Ceci sera le texte du premier cadre" },
+            { title: "titre2", show: false, text: "Ceci sera le texte du deuxième cadre" },
+            { title: "titre2", show: false, text: "Ceci sera le texte du troisième cadre" },
+        ],
+
         padless: false,
+        show: false,
       }),
 
       computed: {
@@ -306,6 +333,10 @@
 
         goToAnotherPage(param) {
           return `${param}`;
+        },
+
+        getImageUrl(imageId) {
+          return `../assets/${imageId}`;
         },
       },
     });

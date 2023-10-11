@@ -53,16 +53,23 @@
             font-size: 18px;
         }
 
+        .v-responsive__content {
+          width: 0 !important;
+        }
+
         .img {
           margin: 5%;
         }
         @media screen and (max-width: 1336px) {
-            .card-community {
-                display: none;
-            }
-            .card-community--respon {
-                display: block;
-            }
+          .card-community {
+              display: none;
+          }
+          .card-community--respon {
+              display: block;
+          }
+          .v-responsive__content {
+            width: 0 !important;
+          }
         }
     </style>
   </head>
@@ -109,7 +116,7 @@
                       v-model="drawer"
                       absolute
                       temporary
-                      height="330"
+                      height="375"
                       style="top: 100%;"
                       >
                       <v-list
@@ -330,6 +337,7 @@
             items: [
               { title: "Home", btn: "./../" },
               { title: "Première visite", btn: "visite" },
+              { title: "Mission", btn: "mission" },
               { title: "Communauté", btn: "community" },
               { title: "Activités", btn: "activity" },
               { title: "Ressources", btn: "ressource" },
@@ -345,7 +353,7 @@
                         ' le temps avec eux afin de poser les fondements de la Parole de Dieu dans leur cœur, et ainsi faire naître en eux la foi et les aider à grandir dans leur relation avec Jésus.'+
                         ' Mais en le faisant d’une manière attractive et vivante, en utilisant des méthodes adaptées à chaque âge. Nous savons qu’il est important d’inculquer dès le plus jeune âge aux'+
                         ' futurs adultes de demain des valeurs chrétiennes fondamentales.\nLes différents groupes : \n - Les abeilles (3-6 ans)\n- Les papillons (7-22 ans)\n- Les explorateurs (12-14 ans)',
-                image: 'logo.svg'
+                image: 'logonoircaté.png'
                 },
                 { 
                 id: 2,

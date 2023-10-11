@@ -20,6 +20,9 @@
       href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@3.3.20/dist/vuetify.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@3.3.20/dist/vuetify.min.js"></script>
 
     <link rel="stylesheet" href="./style/nav.css" />
 
@@ -119,7 +122,7 @@
                   v-model="drawer"
                   absolute
                   temporary
-                  height="330"
+                  height="375"
                   style="top: 100%"
                 >
                   <v-list nav dense>
@@ -293,6 +296,7 @@
         items: [
           { title: "Home", btn: "/" },
           { title: "Première visite", btn: "./page/visite" },
+          { title: "Mission", btn: "./page/mission" },
           { title: "Communauté", btn: "./page/community" },
           { title: "Activités", btn: "./page/activity" },
           { title: "Ressources", btn: "./page/ressource" },
@@ -303,10 +307,9 @@
         colors: ["#C5CAE9", "#E53935", "#5E35B1", "#80D8FF", "#388E3C"],
         slides: ["First", "Second", "Third", "Fourth", "Fifth"],
         cards: [
-          /*{ title: "Contact", link: "contact.jpg", btn: "./page/contact" },*/
-          { title: "Ressource", link: "ressource.jpg", btn: "./page/ressource" },
+          { title: "Mission", link: "", btn: "./page/mission" },
           { title: "Communaute", link: "communaute.png", btn: "./page/community" },
-          { title: "Donate", link: "donation.png", btn: "./page/sustain" },
+          { title: "Ressource", link: "ressource.jpg", btn: "./page/ressource" },
         ],
 
         icons: [
