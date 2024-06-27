@@ -20,9 +20,12 @@
       href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@3.3.20/dist/vuetify.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@3.3.20/dist/vuetify.min.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/vuetify@3.3.20/dist/vuetify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@3.3.20/dist/vuetify.min.js"></script> -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@3.6.10/dist/vuetify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@3.6.10/dist/vuetify.min.js"></script>
 
     <link rel="stylesheet" href="./style/nav.css" />
 
@@ -74,6 +77,14 @@
       .red {
         color: red;
       }
+
+      /* .v-btn__content {
+        color: black;
+      } */
+       /* Custom styles for the carousel delimiters */
+      .v-btn__content .mdi-circle {
+        color: black !important;
+      }
     </style>
   </head>
   <body>
@@ -91,55 +102,26 @@
                   </a>
                   <i class="fa fa-square-o fa-stack-2x"></i>
                 </div>
-                <ul
-                  v-show="!mobile"
-                  class="navigation"
-                  style="justify-content: space-evenly;"
-                >
-                  <a v-for="(item, index) in items"
-                    :key="index"
-                    class="link"
-                    id="nav-link"
-                    :href="goToAnotherPage(item.btn)"
-                    style="color: #E8917B"
-                    >{{ item.title }}</a
-                  >
-                  <a class="link"
-                    id="nav-link" 
-                    href="./page/sustain"
-                    style="color: #C51162;"
-                  >
-                    Nous soutenir</a>
+                <ul v-show="!mobile" class="navigation" style="justify-content: space-evenly;">
+                  <a v-for="(item, index) in items" :key="item.title" class="link" id="nav-link" :href="goToAnotherPage(item.btn)" style="color: #E8917B">
+                    {{ item.title }}
+                  </a>
+                  <a class="link" id="nav-link" href="./page/sustain" style="color: #C51162;">Nous soutenir</a>
                 </ul>
-
+    
                 <div class="icon" v-show="mobile">
-                  <v-app-bar-nav-icon
-                    color="#E8917B"
-                    @click="drawer = true"
-                  ></v-app-bar-nav-icon>
+                  <v-app-bar-nav-icon color="#E8917B" @click="drawer = true"></v-app-bar-nav-icon>
                 </div>
-                <v-navigation-drawer
-                  v-model="drawer"
-                  absolute
-                  temporary
-                  height="375"
-                  style="top: 100%"
-                >
+                <v-navigation-drawer v-model="drawer" absolute temporary height="375" style="top: 100%">
                   <v-list nav dense>
                     <v-list-item-group>
-                      <v-list-item v-for="(item, index) in items" :key="index">
-                        <a
-                          class="link"
-                          id="nav-link"
-                          :href="goToAnotherPage(item.btn)"
-                          style="color: #E8917B"
-                          >{{ item.title }}</a
-                        >
+                      <v-list-item v-for="(item, index) in items" :key="item.title">
+                        <a class="link" id="nav-link" :href="goToAnotherPage(item.btn)" style="color: #E8917B">
+                          {{ item.title }}
+                        </a>
                       </v-list-item>
                       <v-list-item>
-                        <a class="link" style="color: #C51162;"
-                          href="./page/sustain">Nous soutenir
-                        </a>
+                        <a class="link" style="color: #C51162;" href="./page/sustain">Nous soutenir</a>
                       </v-list-item>
                     </v-list-item-group>
                   </v-list>
@@ -147,119 +129,84 @@
               </nav>
             </header>
           </div>
-
+    
           <div class="main">
             <div>
               <v-row>
                 <v-col cols="12" md="6" style="margin: auto">
-                  <p style="text-align: center; font-size: 35px; padding: auto">
-                    A la une
-                  </p>
+                  <p style="text-align: center; font-size: 35px; padding: auto">A la une</p>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-carousel
-                    cycle
-                    height="400"
-                    hide-delimiter-background
-                    :show-arrows="false"
-                  >
-                    <v-carousel-item v-for="(slide, i) in slides" :key="i">
-                      <v-sheet :color="colors[i]" height="100%">
-                        <v-row
-                          class="fill-height"
-                          align="center"
-                          justify="center"
-                        >
-                          <div class="text-h2">{{ slide }} Slide</div>
-                        </v-row>
-                      </v-sheet>
-                    </v-carousel-item>
-                  </v-carousel>
+                  <v-card>
+                    <v-carousel cycle height="400" hide-delimiter-background :show-arrows="false" delimiter-icon="mdi-circle" progress-color="black">
+                      <v-carousel-item v-for="slide in slides" :key="slide.title">
+                        <v-sheet :color="slide.color" height="100%">
+                          <v-row class="fill-height" align="center" justify="center">
+                            <div v-if="slide.image">
+                              <img :src="slide.image" alt="Slide image" style="max-width: 100%; height: auto;">                            
+                            </div>
+                            <div v-else style="font-size: 20px;" v-html="slide.text">
+                            </div>
+                          </v-row>
+                        </v-sheet>
+                      </v-carousel-item>
+                    </v-carousel>
+                  </v-card>
                 </v-col>
               </v-row>
             </div>
-
+    
             <div class="Service">
               <v-row>
                 <v-col>
-                  <p>
-                    Service tous les dimanches <br />en présentiel ou en
-                    ligne<br />à 10h
-                  </p>
+                  <p>Service tous les dimanches <br />en présentiel ou en ligne<br />à 10h</p>
                 </v-col>
               </v-row>
               <v-row>
                 <v-layout style="justify-content: center">
-                  <a
-                    href="https://www.youtube.com/@eglisepaindevie3673/featured"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href="https://www.youtube.com/@eglisepaindevie3673/featured" target="_blank" rel="noopener noreferrer">
                     <v-btn style="background-color: #e8917b">
                       Culte en ligne
-                      <v-icon right> mdi-forward </v-icon>
+                      <v-icon right>mdi-forward</v-icon>
                     </v-btn>
                   </a>
                 </v-layout>
               </v-row>
             </div>
-
+    
             <div class="Service">
               <v-row>
-                <v-col align-self="center" v-for="(card, i) in cards" :key="i">
-                  <v-img
-                    class="imageCenter"
-                    :src="getImageUrl(card.link)"
-                    height="350px"
-                    width="350px"
-                  >
+                <v-col align-self="center" v-for="(card, i) in cards" :key="card.title">
+                  <v-img class="imageCenter" :src="getImageUrl(card.link)" height="350px" width="350px">
                     <div class="text-overlay">
-                      <a
-                        class="link"
-                        id="nav-link"
-                        :href="goToAnotherPage(card.btn)"
-                        >
-                        <v-btn
-                          class="btn"
-                          plain
-                        >
+                      <a class="link" id="nav-link" :href="goToAnotherPage(card.btn)">
+                        <v-btn class="btn" plain>
                           {{ card.title }}
                         </v-btn>
-                    </a>
+                      </a>
                     </div>
                   </v-img>
                 </v-col>
               </v-row>
             </div>
           </div>
-
+    
           <div>
             <v-card>
-              <div
-                v-bind="localAttrs"
-                :padless="padless"
-                style="margin-top: 2%"
-              >
-                <v-card
-                  flat
-                  tile
-                  width="100%"
-                  class="footer"
-                  style="background-color: #ededed; text-align: center"
-                >
+              <div v-bind="localAttrs" :padless="padless" style="margin-top: 2%">
+                <v-card flat tile width="100%" class="footer" style="background-color: #ededed; text-align: center">
                   <v-card-text>
-                    <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon>
+                    <v-btn v-for="icon in icons" :key="icon.icon" class="mx-4" icon>
                       <a :href="goToAnotherPage(icon.link)">
-                        <v-icon color="#E8917B" size="37px"> {{ icon.icon }}</v-icon>
+                        <v-icon color="#E8917B" size="37px">{{ icon.icon }}</v-icon>
                       </a>
                     </v-btn>
                   </v-card-text>
-
+    
                   <v-divider style="color: #e8917b"></v-divider>
-
+    
                   <v-card-text style="color: #e8917b; font-size: 17px">
-                    &copy;{{ new Date().getFullYear() }} —
-                    <strong>Pain de Vie</strong>
+                    &copy;{{ new Date().getFullYear() }} — <strong>Pain de Vie</strong>
                   </v-card-text>
                 </v-card>
               </div>
@@ -270,18 +217,18 @@
     </div>
     <!-- built files will be auto injected -->
   </body>
-
+    
   <!--================ script ===================-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 
   <script src="https://www.w3schools.com/lib/w3data.js"></script>
-
+  
   <script type="text/javascript">
     w3IncludeHTML();
   </script>
-
+    
   <script>
     new Vue({
       el: "#app",
@@ -296,35 +243,60 @@
         items: [
           { title: "Home", btn: "/" },
           { title: "Première visite", btn: "./page/visite" },
-          { title: "Mission", btn: "./page/mission" },
+          { title: "Vision", btn: "./page/vision" },
           { title: "Communauté", btn: "./page/community" },
           { title: "Activités", btn: "./page/activity" },
           { title: "Ressources", btn: "./page/ressource" },
           { title: "Contact", btn: "./page/contact" },
-          /*{ title: "Nous soutenir", btn: "./page/sustain", b: "Red" },*/
         ],
-
-        colors: ["#C5CAE9", "#E53935", "#5E35B1", "#80D8FF", "#388E3C"],
-        slides: ["First", "Second", "Third", "Fourth", "Fifth"],
+  
+        //colors: ["#C5CAE9", "#E53935", "#5E35B1", "#80D8FF", "#388E3C"],
+        slides: [
+          { title: "First", color: "",
+            text : "Nous existons pour: <br/>"+
+                  "&#45; Adorer et prier Dieu<br/>"+
+                  "&#45; Grandir dans la Parole<br/>"+
+                  "&#45; Faire connaitre Christ par l'évangélisation<br>"+
+                  "&#45; Servir notre prochain<br/>"+
+                  "&#45; Grandir dans la communion fraternelle",
+            image: ''
+          },
+          { title: "Second", color: "#E53935",
+            text: "Second",
+            image: ""
+          },
+          { title: "Third", color: "#5E35B1",
+            text: "Third",
+            image: ""
+          },
+          { title: "Fourth", color: "#80D8FF",
+            text: "Fourth",
+            image: ""
+          },
+          { title: "Fifth", color: "#388E3C",
+            text: "Fifth",
+            image: ""
+          }
+        ],
         cards: [
-          { title: "Mission", link: "", btn: "./page/mission" },
+          { title: "Vision", link: "", btn: "./page/vision" },
           { title: "Communaute", link: "communaute.png", btn: "./page/community" },
           { title: "Ressource", link: "ressource.jpg", btn: "./page/ressource" },
         ],
-
+  
         icons: [
-          {icon: "mdi-email", link: "./page/contact"},
-          {icon: "mdi-youtube", link: "https://www.youtube.com/@eglisepaindevie3673/featured" },
-          {icon: "mdi-instagram", link: "ok"}
+          { icon: "mdi-email", link: "./page/contact" },
+          { icon: "mdi-youtube", link: "https://www.youtube.com/@eglisepaindevie3673/featured" },
+          { icon: "mdi-instagram", link: "ok" },
         ],
         padless: false,
         variant: "default",
       }),
-
+  
       computed: {
         localAttrs() {
           const attrs = {};
-
+  
           if (this.variant === "default") {
             attrs.absolute = false;
             attrs.fixed = false;
@@ -334,21 +306,21 @@
           return attrs;
         },
       },
-
+  
       created() {
         window.addEventListener("resize", this.checkScreen);
         this.checkScreen();
       },
-
+  
       mounted() {
         window.addEventListener("scroll", this.updateScroll);
       },
-
+  
       methods: {
         toggleMobileNav() {
           this.mobileNav = !this.mobileNav;
         },
-
+  
         updateScroll() {
           const scrollPosition = window.scrollY;
           if (scrollPosition > 50) {
@@ -357,7 +329,7 @@
           }
           this.scrolledNav = false;
         },
-
+  
         checkScreen() {
           this.windowWidth = window.innerWidth;
           if (this.windowWidth <= 1257) {
@@ -368,18 +340,18 @@
           this.mobileNav = false;
           return;
         },
-
+  
         goToAnotherPage(param) {
           return `${param}`;
         },
-
+  
         getImageUrl(imageId) {
           return `./assets/${imageId}`;
         },
         getcolorsClass(index) {
-          const classes = ["red"]
-          return classes[index]
-        }
+          const classes = ["red"];
+          return classes[index];
+        },
       },
     });
   </script>

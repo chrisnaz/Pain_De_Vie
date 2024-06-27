@@ -21,10 +21,14 @@
       rel="stylesheet"
     />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@3.3.20/dist/vuetify.min.css">
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vuetify@3.3.20/dist/vuetify.min.js"></script> -->
+
     <link rel="stylesheet" href="./../style/nav.css" />
 
     <link rel="icon" href="./../assets/favicon.ico" />
-    <title>Activités | Eglise Pain de Vie</title>
+    <title>Vision | Eglise Pain de Vie</title>
     <style>
       .main {
         padding: 16vh 6% 0 6%;
@@ -39,10 +43,8 @@
         font-style: italic;
       }
 
-      .text {
+      p {
         text-align: justify;
-        white-space: pre-line;
-        margin-top: 2%;
         line-height: 33px;
         font-size: 18px;
       }
@@ -73,7 +75,7 @@
                     class="link"
                     id="nav-link"
                     :href="goToAnotherPage(item.btn)"
-                    style="color: #E8917B;"
+                    style="color: #E8917B"
                     >{{ item.title }}</a
                   >
                   <a class="link"
@@ -120,38 +122,84 @@
             </header>
           </div>
 
-          <v-app class="main">
-            <v-timeline
-              align-top
-              :dense="$vuetify.breakpoint.smAndDown"
-              :reverse="!reverse"
-            >
-              <v-timeline-item
-                v-for="(item, i) in Items"
-                :key="i.title"
-                :color="item.color"
-                fill-dot
-              >
-                <v-card :color="item.color" dark>
-                  <v-card-title class="text-h6">
-                    {{ item.title }}
-                  </v-card-title>
-                  <v-card-text class="white text--primary">
-                    <p class="text">{{ item.text }}</p>
-                    <!--v-btn
-                                    :color="item.color"
-                                    class="mx-0"
-                                    outlined
-                                    >
-                                    Button
-                                    </!--v-btn-->
-                  </v-card-text>
-                </v-card>
-              </v-timeline-item>
-            </v-timeline>
-          </v-app>
-
           <div>
+            <!-- <v-img
+              class="imageCenter"
+              src="./../assets/donation.png"
+              height="60vh"
+            >
+              <div class="text-overlay"></div>
+            </v-img> -->
+          </div>
+          <div class="main">
+            <h1 style="text-align: center;" >Notre mission</h1>
+
+            <v-row align="center" justify="space-around" style="margin-top: 2rem;">
+              <v-col v-for="(mission, i) in missions"
+                :key="i.title"
+                cols="auto">
+                <v-card
+                    class="mx-auto"
+                    max-width="344"
+                >
+                  <v-img
+                      src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                      height="200px"
+                      class="white--text align-center text-center"
+                  >
+                      <v-card-title class="d-flex justify-center" style="color: white;">{{ mission.title }}</v-card-title>
+                  </v-img>
+
+                  <!-- <v-card-title>
+                      Top western road trips
+                  </v-card-title> -->
+
+                  <v-card-subtitle>
+                      1,000 miles of wonder
+                  </v-card-subtitle>
+
+                  <v-card-actions>
+                    <v-btn
+                        color="orange lighten-2"
+                        text
+                        @click="mission.show = !mission.show"
+                    >
+                        En savoir plus
+                    </v-btn>
+
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        icon
+                        @click="mission.show = !mission.show"
+                    >
+                        <v-icon>{{ mission.show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                    </v-btn>
+
+                  </v-card-actions>
+
+                  <v-expand-transition>
+                    <div v-show="mission.show">
+                      <v-divider></v-divider>
+
+                      <v-card-text v-html="mission.text" style="font-size: 15px;text-align: justify;">
+                        <!-- {{ mission.text }} -->
+                      </v-card-text>
+                    </div>
+                  </v-expand-transition>
+                </v-card>
+              </v-col>
+            </v-row>
+            <v-row style="margin-top: 3rem;">
+                <v-col>
+                    <p style="text-align: center;">
+                      Le Seigneur appelle notre église à être une communauté des personnes qui grandissent ensemble dans la restauration, 
+                      la consécration  et l’engagement  dans le but de  ressembler à Jésus,  le connaître et le faire connaitre aux autres.
+                    </p>
+                </v-col>
+            </v-row>
+          </div>
+
+          <div style="margin-top: 4rem;">
             <v-card>
               <div
                 v-bind="localAttrs"
@@ -190,6 +238,7 @@
   </body>
 
   <!--================ script ===================-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 
@@ -209,11 +258,10 @@
         mobileNav: null,
         windowWidth: null,
         drawer: false,
-        tab: null,
         items: [
           { title: "Home", btn: "./../" },
           { title: "Première visite", btn: "visite" },
-          { title: "Vision", btn: "vision" },
+          { title: "Mission", btn: "mission" },
           { title: "Communauté", btn: "community" },
           { title: "Activités", btn: "activity" },
           { title: "Ressources", btn: "ressource" },
@@ -221,39 +269,39 @@
           /*{ title: "Nous soutenir", btn: "sustain" },*/
         ],
 
-        Items: [
-          {
-            color: "red lighten-2",
-            title: "Culte",
-            text:
-              "Nous vous accueillons chaque dimanche à 10h, pour un moment de culte centré sur la Bible car nous croyons que c’est elle qui nous façonne et nous guide." +
-              " Nous exprimons notre amour et notre reconnaissance à Dieu par des chants. La mort et la résurrection sont le fondement de notre foi c’est pourquoi nous " +
-              "partageons le pain et le vin pour nous rappeler du corps brisé et du sang versé à la croix.",
-          },
-          {
-            color: "purple darken-1",
-            title: "Réunion de prière",
-            text:
-              "« Ne vous inquiétez de rien ; mais en toute chose faites connaître vos besoins à Dieu par des prières et des supplications, avec actions de grâces » Philippiens 4:6\n" +
-              "Un vendredi sur deux, nos portes sont ouvertes à partir de 20h pour un temps de prière pour nous soutenir mutuellement et exposer les besoins de notre église et de notre ville à Dieu.",
-          },
-          {
-            color: "green lighten-1",
-            title: "Pdv formation",
-            text:
-              "Veux-tu découvrir la foi chrétienne ?\n" +
-              "Veux-tu en savoir davantage sur Dieu ?\n" +
-              "Veux-tu t’engager avec Dieu ?\n" +
-              "Rejoins nous un dimanche après-midi sur deux pour découvrir les fondements de la foi chrétienne.",
-          },
-        ],
-        reverse: false,
         icons: [
-          {icon: "mdi-email", link: "contact"},
-          {icon: "mdi-youtube", link: "https://www.youtube.com/@eglisepaindevie3673/featured" },
-          {icon: "mdi-instagram", link: "ok"}
+          { icon: "mdi-email", link: "contact" },
+          { icon: "mdi-youtube", link: "https://www.youtube.com/@eglisepaindevie3673/featured" },
+          { icon: "mdi-instagram", link: "ok" }
         ],
+
+        missions: [
+            { title: "Une communauté consacrée", show: false, 
+              text: "La destinée de chaque  croyant est de se laisser guider par le Saint-Esprit pour se conformer à l'image de Jésus-Christ, le Fils de Dieu.<br/>"+
+                    "Nous aspirons à être un lieu de formation  pour des disciples consacrés, où chaque personne, quel que soit son âge, <br/>"+
+                    "&#45; Progresse dans la connaissance et la mise en pratique de la parole <br/>"+
+                    "&#45; Réalise que pour progresser dans la consécration, il est essentiel de faire des choix qui glorifient Dieu. <br/>"+
+                    "&#45; Réalise l'importance d'adopter un discours et un comportement qui s'aligne avec la Parole de Dieu, quelles que "+
+                    "soient les sphères de vie où Dieu l'a placé. (famille, travail, université, voisinage, environnement) <br/>"
+            },
+            { title: "Une communauté restaurée ", show: false, 
+              text: "Nous pensons que Dieu le Père occupe une place centrale dans ce processus de restauration et souhaite que chacun "+
+                    "puisse se développer et s'épanouir dans sa relation avec Lui. C'est pour cette raison que nous désirons être <br/>"+
+                    "&#45; Un lieu d'accueil où chaque personne peut s’engager dans  un processus de restauration et de guérison. <br/>"+
+                    "&#45; Un lieu où des individus blessés, frustrés, stressés, en proie à la dépression peuvent trouver du soutien, de l'encouragement et de l'espoir pour leur restauration. <br/>"+
+                    "&#45; Un outil divin pour accompagner les individus dans leur démarche de foi vers la guérison de leurs blessures intérieures <br/>"
+            },
+            { title: "Une communauté engagée", show: false, 
+              text: "Chaque enfant de Dieu a reçu des dons, des talents et des capacités du Saint Esprit pour le progrès du royaume de Dieu.<br/>"+
+                    "Pour cela, Nous aspirons à être <br/>"+
+                    "&#45; Un lieu qui aide et accompagne chaque individu à découvrir ses dons et talents pour progresser dans son engagement pour le royaume de Dieu. <br/>"+
+                    "&#45; Un lieu où chaque individu est encouragé à s'impliquer et à développer ses dons et talents, au service de Christ et des autres. dans la liberté totale que donne le Saint-Esprit. <br/>"+
+                    "&#45; Un endroit où l'engagement et la fidélité  dans de petites choses sont valorisées." 
+            },
+        ],
+
         padless: false,
+        show: false,
       }),
 
       computed: {
@@ -306,6 +354,10 @@
 
         goToAnotherPage(param) {
           return `${param}`;
+        },
+
+        getImageUrl(imageId) {
+          return `../assets/${imageId}`;
         },
       },
     });

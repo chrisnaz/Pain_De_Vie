@@ -98,7 +98,7 @@
                   style="justify-content: space-evenly;"
                 >
                   <a v-for="(item, index) in items"
-                    :key="index"
+                    :key="index.title"
                     class="link"
                     id="nav-link"
                     :href="goToAnotherPage(item.btn)"
@@ -128,7 +128,7 @@
                 >
                   <v-list nav dense>
                     <v-list-item-group>
-                      <v-list-item v-for="(item, index) in items" :key="index">
+                      <v-list-item v-for="(item, index) in items" :key="index.title">
                         <a
                           class="link"
                           id="nav-link"
@@ -166,7 +166,7 @@
               <v-col cols="12" md="6">
                 <v-form ref="form" v-model="valid" :lazy-validation="lazy">
                   <v-text-field
-                    v-model="name"
+                    v-model="lastname"
                     :rules="nameRules"
                     label="Nom*"
                     required
@@ -196,7 +196,7 @@
                   ></v-text-field>
 
                   <v-textarea
-                    v-model="firstname"
+                    v-model="subject"
                     :rules="nameRules"
                     label="Sujet*"
                     required
@@ -286,7 +286,7 @@
                   class="footer"
                   style="background-color: #ededed; text-align: center"
                 >
-                  <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon>
+                  <v-btn v-for="icon in icons" :key="icon.icon" class="mx-4" icon>
                     <a :href="goToAnotherPage(icon.link)">
                       <v-icon color="#E8917B" size="37px"> {{ icon.icon }}</v-icon>
                     </a>
@@ -339,7 +339,7 @@
         items: [
           { title: "Home", btn: "./../" },
           { title: "Première visite", btn: "visite" },
-          { title: "Mission", btn: "mission" },
+          { title: "Vision", btn: "vision" },
           { title: "Communauté", btn: "community" },
           { title: "Activités", btn: "activity" },
           { title: "Ressources", btn: "ressource" },
@@ -355,7 +355,10 @@
         ],
         padless: false,
         valid: true,
-        name: "",
+        lastname: "",
+        firstname: "",
+        email: "",
+        subject: "",
         nameRules: [
           (v) => !!v || "Name is required",
           //v => (v && v.length <= 10) || 'Name must be less than 10 characters',

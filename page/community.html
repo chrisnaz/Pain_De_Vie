@@ -125,7 +125,7 @@
                       >
                         <v-list-item-group
                         >
-                        <v-list-item v-for="(item, index) in items" :key="index">
+                        <v-list-item v-for="(item, index) in items" :key="index.title">
                           <a
                             class="link"
                             id="nav-link"
@@ -167,7 +167,7 @@
                     >
                       <v-tab
                         v-for="(item, index) in community"
-                        :key="index"
+                        :key="index.title"
                       >
                       <v-card
                           class="mx-auto"   
@@ -199,7 +199,7 @@
                         >
                         <v-tab-item
                           v-for="(item, index) in community"
-                          :key="index"
+                          :key="index.title"
                         >
                           <v-card
                             color="basil"
@@ -224,7 +224,7 @@
                         align="center"
                         justify="center" 
                         >
-                        <v-col v-for="(post, index) in community" :key="index"
+                        <v-col v-for="(post, index) in community" :key="index.title"
                             cols="10" 
                             md="4"
                         >
@@ -290,7 +290,7 @@
                       style="background-color: #EDEDED;text-align: center;"
                     >
                       <v-card-text>
-                        <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon>
+                        <v-btn v-for="icon in icons" :key="icon.icon" class="mx-4" icon>
                           <a :href="goToAnotherPage(icon.link)">
                             <v-icon color="#E8917B" size="37px"> {{ icon.icon }}</v-icon>
                           </a>
@@ -337,7 +337,7 @@
             items: [
               { title: "Home", btn: "./../" },
               { title: "Première visite", btn: "visite" },
-              { title: "Mission", btn: "mission" },
+              { title: "Vision", btn: "vision" },
               { title: "Communauté", btn: "community" },
               { title: "Activités", btn: "activity" },
               { title: "Ressources", btn: "ressource" },
