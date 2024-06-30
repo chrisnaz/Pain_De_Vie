@@ -85,6 +85,21 @@
       .v-btn__content .mdi-circle {
         color: black !important;
       }
+
+      .MainScree-response {
+        display: none;
+      }
+
+      @media only screen and (max-width: 959px) {
+        .MainScreen {
+          display: none;
+        }
+
+        .MainScree-response {
+          display: contents;
+        }
+      }
+
     </style>
   </head>
   <body>
@@ -130,31 +145,72 @@
             </header>
           </div>
     
-          <div class="main">
-            <div>
+          <div>
+            <div class="main MainScreen">
               <v-row>
-                <v-col cols="12" md="6" style="margin: auto">
+                <v-col cols="6" md="4" style="margin: auto">
                   <p style="text-align: center; font-size: 35px; padding: auto">A la une</p>
                 </v-col>
-                <v-col cols="12" md="6">
-                  <v-card>
+                <v-col cols="12" sm="6" md="8">
+                  <!-- <v-card> -->
                     <v-carousel cycle height="400" hide-delimiter-background :show-arrows="false" delimiter-icon="mdi-circle" progress-color="black">
                       <v-carousel-item v-for="slide in slides" :key="slide.title">
-                        <v-sheet :color="slide.color" height="100%">
+                        <v-sheet :color="slide.color" >
                           <v-row class="fill-height" align="center" justify="center">
-                            <div v-if="slide.image">
-                              <img :src="slide.image" alt="Slide image" style="max-width: 100%; height: auto;">                            
+                            <div v-if="slide.src">
+                              <div class="fullscreen-video-container">
+                                <!-- Our video and text content will live here -->
+                                <video autoplay loop muted>
+                                  <!-- We'll plug in the video source next -->
+                                  <source :src="slide.src" type="video/mp4">
+                                </video>
+                              </div>
                             </div>
                             <div v-else style="font-size: 20px;" v-html="slide.text">
+                              <!-- <img :src="slide.image" alt="Slide image" style="max-width: 100%; height: auto;">                             -->
                             </div>
                           </v-row>
                         </v-sheet>
                       </v-carousel-item>
                     </v-carousel>
-                  </v-card>
+                  <!-- </v-card> -->
                 </v-col>
               </v-row>
             </div>
+
+            <div class="MainScree-response">
+              <div class="main">
+                <v-row>
+                  <v-col cols="6" md="4" style="margin: auto">
+                    <p style="text-align: center; font-size: 35px; padding: auto">A la une</p>
+                  </v-col>
+                </v-row>
+              </div>
+              <div>
+                <v-carousel cycle height="400" hide-delimiter-background :show-arrows="false" delimiter-icon="mdi-circle" progress-color="black">
+                  <v-carousel-item v-for="slide in slides" :key="slide.title">
+                    <v-sheet :color="slide.color" >
+                      <v-row class="fill-height" align="center" justify="center">
+                        <div v-if="slide.repon">
+                          <div class="fullscreen-video-container">
+                            <!-- Our video and text content will live here -->
+                            <!-- <video :ref="'video' + index" @ended="onVideoEnded(index)" autoplay loop muted> -->
+                            <video autoplay loop muted>
+                              <!-- We'll plug in the video source next -->
+                              <source :src="slide.repon" type="video/mp4">
+                            </video>
+                          </div>
+                        </div>
+                        <div v-else style="font-size: 20px;" v-html="slide.text">
+                          <!-- <img :src="slide.image" alt="Slide image" style="max-width: 100%; height: auto;">                             -->
+                        </div>
+                      </v-row>
+                    </v-sheet>
+                  </v-carousel-item>
+                </v-carousel>
+              </div>
+            </div>
+
     
             <div class="Service">
               <v-row>
@@ -190,7 +246,7 @@
               </v-row>
             </div>
           </div>
-    
+
           <div>
             <v-card>
               <div v-bind="localAttrs" :padless="padless" style="margin-top: 2%">
@@ -259,24 +315,26 @@
                   "&#45; Faire connaitre Christ par l'évangélisation<br>"+
                   "&#45; Servir notre prochain<br/>"+
                   "&#45; Grandir dans la communion fraternelle",
-            image: ''
+            src: './assets/video/frist.mp4',
+            repon: './assets/video/frist_respon.mp4'
           },
-          { title: "Second", color: "#E53935",
+          { title: "Second", color: "",
             text: "Second",
-            image: ""
+            src: "./assets/video/second.mp4",
+            repon: './assets/video/second_respon.mp4'
           },
-          { title: "Third", color: "#5E35B1",
-            text: "Third",
-            image: ""
-          },
-          { title: "Fourth", color: "#80D8FF",
-            text: "Fourth",
-            image: ""
-          },
-          { title: "Fifth", color: "#388E3C",
-            text: "Fifth",
-            image: ""
-          }
+          // { title: "Third", color: "#5E35B1",
+          //   text: "Third",
+          //   src: ""
+          // },
+          // { title: "Fourth", color: "#80D8FF",
+          //   text: "Fourth",
+          //   src: ""
+          // },
+          // { title: "Fifth", color: "#388E3C",
+          //   text: "Fifth",
+          //   src: ""
+          // }
         ],
         cards: [
           { title: "Vision", link: "", btn: "./page/vision" },
@@ -352,6 +410,13 @@
           const classes = ["red"];
           return classes[index];
         },
+        onVideoEnded(index) {
+            if (index < this.slides.length - 1) {
+              this.$refs.carousel.move(index + 1);
+            } else {
+              this.$refs.carousel.move(0);
+            }
+          },
       },
     });
   </script>
