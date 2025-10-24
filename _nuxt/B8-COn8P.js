@@ -1,0 +1,1 @@
+import{s as e,V as s,n as t,ae as n}from"./D3EngaK0.js";function i(){const o=e(!1);return s(()=>{window.requestAnimationFrame(()=>{o.value=!0})}),{ssrBootStyles:t(()=>o.value?void 0:{transition:"none !important"}),isBooted:n(o)}}export{i as u};

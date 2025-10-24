@@ -1,0 +1,1 @@
+import{aj as s}from"./D3EngaK0.js";function i(){const e=s();return{goToPage:o=>{o?e.push(o).catch(r=>{console.error(`Navigation vers ${o} échouée :`,r)}):console.error("La page spécifiée est vide.")}}}export{i as u};
